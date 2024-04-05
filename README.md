@@ -117,4 +117,4 @@ urn:uuid:c5542ab6-3d96-403e-8e6b-b8bb52f48d9a?q=x
 */
 ```
 
-Use the demo page included with `parseUri` to easily test and compare results.
+Use `parseUri`’s [demo page](https://slevithan.github.io/parseuri/demo/) to easily test and compare results.
