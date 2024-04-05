@@ -1,0 +1,187 @@
+#uri-input {
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #f5f5f5;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease;
+}
+
+#uri-input:focus {
+  outline: none;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.7);
+}
+
+body {
+  margin: 0 20px 20px 20px;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+}
+
+.badge {
+  display: inline-block;
+  border-radius: 0.375rem;
+  padding: 2px 4px;
+  background-color: #888;
+  color: #fff;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+.different, .badge.different {
+  background-color: #ff6b6b;
+}
+.friendly-mode.different {
+  background: repeating-linear-gradient(45deg, #dfdfdf, #dfdfdf 3px, #d0d0d0 3px, #d0d0d0 10px);
+}
+
+.similar, .badge.similar {
+  background-color: #abf384;
+}
+.badge.similar {
+  color: inherit;
+}
+
+.success, .badge.success {
+  background-color: #6bd490;
+}
+
+.neutral {
+  background-color: #dfdfdf;
+}
+
+a {
+  color: #666;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+code {
+  font-family: Consolas, 'Courier New', Courier, monospace;
+}
+
+p code {
+  border-radius: 0.375rem;
+  padding: 1px 3px;
+  background-color: #eee;
+  font-size: 0.9em;
+}
+
+p, details, summary {
+  font-size: 0.9rem;
+}
+
+p, summary {
+  margin: 0 0 0.4rem 0;
+}
+
+summary {
+	cursor: pointer;
+}
+
+.ascii-chart {
+  white-space: pre;
+  font-family: Consolas, 'Courier New', Courier, monospace;
+}
+
+.table-container {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+}
+
+table {
+  margin-top: 20px;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+th, td {
+  padding: 12px;
+  border: 1px solid #efefef;
+}
+
+th {
+  text-align: left;
+  background-color: #f2f2f2;
+}
+
+th:not(:last-of-type) {
+  border-right: 1px solid #dfdfdf;
+}
+
+td {
+  border: 1px solid #efefef;
+}
+
+.uri-part {
+  /* `white-space-collapse` (as a better alternative to `white-space` for simply preserving
+  white-space without other effects) is not yet supported in Firefox/Safari as of 2024-03 */
+  white-space: break-spaces;
+  word-break: break-all;
+  font-family: Consolas, 'Courier New', Courier, monospace;
+  border-radius: 0.375rem;
+  padding: 0 2px;
+}
+
+.neutral .uri-part {
+  background-color: #d8d8d8;
+}
+
+.success .uri-part {
+  background-color: #64cd89;
+}
+
+.similar .uri-part {
+  background-color: #a4ec7d;
+}
+
+.different:not(.friendly-mode) .uri-part {
+  background-color: #f86464;
+}
+
+.comparison-value, .comparison-desc, .comparison-status {
+  color: #888;
+  font-size: small;
+}
+
+.comparison-desc {
+  font-style: italic;
+  word-break: normal;
+}
+
+.different:not(.friendly-mode) :is(.comparison-desc, .object-type) {
+  color: #9a4040;
+}
+
+.success :is(.comparison-desc, .object-type) {
+  color: #468b5e;
+}
+
+.object-type {
+  color: #888;
+  font-style: italic;
+}
+
+.query-params {
+  word-break: normal;
+}
+
+.no-wrap {
+  text-wrap: nowrap;
+}
+
+.fw-normal {
+  font-weight: normal;
+}

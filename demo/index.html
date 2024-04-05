@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>parseUri demo</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <script src="../dist/parseuri.min.js"></script>
+  <script src="assets/parseuri-v1.2.2-for-test.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/urijs@1.19.11/src/URI.min.js"></script>
+  <script src="assets/run.js"></script>
+</head>
+<body id="body">
+  <h1><code>parseUri</code> demo</h1>
+  <p><span class="badge">Context:</span>
+    <code>parseUri</code> is a mighty but tiny URI/URN/URL parser that retrieves the various parts
+    that make up a URI (all of which are optional) from a given string. Its combination of
+    accuracy, flexibility, and brevity is unrivaled (1KB min/gzip, with no dependencies).</p>
+  <p><span class="badge">Demo:</span>
+    This demo page is for testing and comparing between <code>parseUri</code> v2, v1, the built-in
+    <a href="https://developer.mozilla.org/en-US/docs/Web/API/URL"><code>URL</code></a>
+    constructor, and <a href="https://github.com/medialize/URI.js">URI.js</a> (a much larger
+    library with a different API). Results from <code>parseUri</code> v1 are shown only when they
+    differ from v2.</p>
+  <p><span class="badge">Parsing modes:</span>
+    <code>parseUri</code> has two parsing modes: <code>'default'</code> and
+    <code>'friendly'</code>. Default mode follows official URI rules. Friendly mode doesn’t require
+    <code>'&lt;protocol>:'</code>, <code>':'</code>, or <code>'//'</code> to signal the start of an
+    authority, which allows handling human-friendly URLs like
+    <code>'example.com/index.html'</code> as expected. However, it also precludes friendly mode
+    from properly handling relative paths (that don’t start from root <code>'/'</code>) such as
+    <code>'dir/file.html'</code>.</p>
+  <p><span class="badge">Normalization:</span>
+    Unlike JavaScript’s built-in <code>URL</code> constructor and some other libraries,
+    <code>parseUri</code> doesn’t normalize or encode results (normalization often differs between
+    libraries and might or might not include encoding).<!-- Usually this isn’t needed, but if you want
+    encoded outputs, consider first passing your URI through
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURI"><code>encodeURI</code></a>. -->
+    Values that match <code>parseUri</code> in default mode after applying a library’s own
+    normalization to the full URI are shown in <span class="badge similar">light green</span>.</p>
+  <details>
+    <summary>Show more details</summary>
+    <p><code>parseUri</code> makes a best case effort even with partial or invalid URIs. Compare
+      this to JavaScript’s built-in <code>URL</code> constructor which throws e.g. if not given a
+      protocol (and in many other cases) or URI.js which throws e.g. if given port
+      <code>0</code>.</p>
+    <p>Here’s an illustration of what a <code>parseUri</code> result object’s properties
+      contain and how they overlap:</p>
+    <p class="ascii-chart">┌──────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                                  href                                                    │
+├────────────────────────────────────────────────────────────────┬─────────────────────────────────────────┤
+│                             origin                             │                resource                 │
+├──────────┬─┬───────────────────────────────────────────────────┼──────────────────────┬───────┬──────────┤
+│ protocol │ │                     authority                     │       pathname       │ query │ fragment │
+│          │ ├─────────────────────┬─────────────────────────────┼───────────┬──────────┤       │          │
+│          │ │      userinfo       │            host             │ directory │ filename │       │          │
+│          │ ├──────────┬──────────┼──────────────────────┬──────┤           ├─┬────────┤       │          │
+│          │ │ username │ password │       hostname       │ port │           │ │ suffix │       │          │
+│          │ │          │          ├───────────┬──────────┤      │           │ ├────────┤       │          │
+│          │ │          │          │ subdomain │  domain  │      │           │ │        │       │          │
+│          │ │          │          │           ├────┬─────┤      │           │ │        │       │          │
+│          │ │          │          │           │    │ tld │      │           │ │        │       │          │
+"  https   ://   user   :   pass   @ sub1.sub2 . dom.com  : 8080   /p/a/t/h/  a.html    ?  q=1  #   hash   "
+└──────────────────────────────────────────────────────────────────────────────────────────────────────────┘</p>
+    <p><code>parseUri</code> additionally supports IPv4 and IPv6 addresses, URNs, and many edge
+      cases not shown here. It also has partial (extensible) support for second-level domains like
+      in <code>'//example.co.uk'</code>. In this case, the <code>tld</code> value is
+      <code>'co.uk'</code>, <code>domain</code> is <code>'example.co.uk'</code>, and
+      <code>subdomain</code> is <code>''</code>.</p>
+    <p>This page simultaneously presents up to eight result set comparisons <i>(v2 default/friendly,
+      v1 strict/loose, v2 default/v1 strict, v2 friendly/v1 loose, URL/v2-default,
+      URL/v2-default-normalized-by-URL, URI.js/v2-default, URI.js/v2-default-normalized-by-URI.js)</i>
+      across 21 properties that use four different sets of partially-overlapping property names
+      (from v2, v1, <code>URL</code>, and URI.js objects). It also shows when <code>URL</code> or
+      URI.js throw, highlights when default and friendly mode are totally equal, and highlights when
+      the <code>queryParams</code> object represents the same values in different formats across
+      libraries (there are three formats across the different results: <code>parseUri</code> v2 and
+      <code>URL</code> use
+      <a href="https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams"><code>URLSearchParams</code></a>,
+      <code>parseUri</code> v1 uses an object with string values, and URI.js uses an object whose
+      values can be strings, arrays, and/or nulls).</p>
+  </details>
+  <div class="table-container">
+    <div>
+      <input type="text" id="uri-input" oninput="setInput(this.value)" placeholder="Type URI...">
+    </div>
+    <table id="uri-table">
+      <thead>
+        <tr>
+          <th>Key</th>
+          <th><code>parseUri</code> <small class="fw-normal">[default]</small></th>
+          <th>
+            <label>
+              <input id="friendlyMode" type="checkbox" oninput="setOption(this.id, this.checked)">
+              <code>parseUri</code> <small class="fw-normal">[friendly]</small>
+            </label>
+          </th>
+          <th>
+            <label>
+              <input id="urlStandard" type="checkbox" oninput="setOption(this.id, this.checked)">
+              <code>URL</code>
+            </label>
+          </th>
+          <th>
+            <label>
+              <input id="uriJs" type="checkbox" oninput="setOption(this.id, this.checked)">
+              <small><code>URI.js</code></small>
+            </label>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- input for uri-table goes here -->
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

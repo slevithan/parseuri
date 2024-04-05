@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>parseUri specs</title>
+
+  <!-- Jasmine -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jasmine/jasmine@5.1.2/lib/jasmine-core/jasmine.css">
+  <script src="https://cdn.jsdelivr.net/gh/jasmine/jasmine@5.1.2/lib/jasmine-core/jasmine.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/jasmine/jasmine@5.1.2/lib/jasmine-core/jasmine-html.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/jasmine/jasmine@5.1.2/lib/jasmine-core/boot0.js"></script>
+  <script>
+    jasmine.getEnv().configure({random: false});
+  </script>
+  <script src="https://cdn.jsdelivr.net/gh/jasmine/jasmine@5.1.2/lib/jasmine-core/boot1.js"></script>
+
+  <!-- parseUri -->
+  <script src="../dist/parseuri.min.js"></script>
+
+  <!-- Helpers -->
+  <script src="helpers/uri-objects.js"></script>
+
+  <!-- Specs -->
+  <script src="spec-protocol.js"></script>
+  <script src="spec-userinfo.js"></script>
+  <script src="spec-host.js"></script>
+  <script src="spec-hostname-extra.js"></script>
+  <script src="spec-pathname.js"></script>
+  <script src="spec-query.js"></script>
+  <script src="spec-other.js"></script>
+  <script src="spec-uri-collection.js"></script>
+</head>
+<body>
+</body>
+</html>

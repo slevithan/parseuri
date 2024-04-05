@@ -1,0 +1,29 @@
+{
+  "name": "parseuri",
+  "version": "2.0.0",
+  "description": "Mighty but tiny URI parser",
+  "homepage": "https://github.com/slevithan/parseuri",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "esbuild src/index.js --bundle --minify --outfile=dist/parseuri.min.js --global-name=parseUri --footer:js=parseUri.parseUri.setSld=parseUri.setSld;globalThis.parseUri=parseUri.parseUri;",
+    "pretest": "npm run build",
+    "test": "jasmine",
+    "prepublish": "npm test"
+  },
+  "author": "Steven Levithan",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/slevithan/parseuri.git"
+  },
+  "keywords": [
+    "uri",
+    "url",
+    "urn"
+  ],
+  "devDependencies": {
+    "esbuild": "0.20.2",
+    "jasmine": "^5.1.0"
+  }
+}

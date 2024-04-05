@@ -1,9 +1,10 @@
+// modified function name (parseUriV1_2_2) for use in testing
 // parseUri 1.2.2
 // (c) Steven Levithan <stevenlevithan.com>
 // MIT License
 
-function parseUri (str) {
-  var o = parseUri.options,
+function parseUriV1_2_2 (str) {
+  var o = parseUriV1_2_2.options,
     m   = o.parser[o.strictMode ? "strict" : "loose"].exec(str),
     uri = {},
     i   = 14;
@@ -18,7 +19,7 @@ function parseUri (str) {
   return uri;
 }
 
-parseUri.options = {
+parseUriV1_2_2.options = {
   strictMode: false,
   key: ["source","protocol","authority","userInfo","user","password","host","port","relative","path","directory","file","query","anchor"],
   q:   {
