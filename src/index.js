@@ -1,7 +1,5 @@
-//! parseUri 2.0.0 (c) Steven Levithan; MIT License
-/*
-Mighty but tiny URI parser. Here’s an illustration of what a `parseUri` result object’s properties
-contain and how they overlap:
+//! parseUri 2.0.0; Steven Levithan; MIT License
+/* Mighty but tiny URI/URN/URL parser; splits any URI into its parts (all of which are optional).
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────────────┐
 │                                                  href                                                    │
 ├────────────────────────────────────────────────────────────────┬─────────────────────────────────────────┤
@@ -25,7 +23,7 @@ Also supports IPv4 and IPv6 addresses, URNs, and many edge cases not shown here.
 /**
  * Splits any URI into its parts.
  *
- * @param {String} uri URI; all parts optional.
+ * @param {String} uri Any URI.
  * @param {String} [mode] Parsing mode: `'default'` or `'friendly'`. Default follows official URI
  *   rules. Friendly handles human-friendly URLs like `'example.com/index.html'` as expected.
  * @returns {Object} Object with URI parts. Includes `queryParams`, a `URLSearchParams` object.

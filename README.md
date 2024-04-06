@@ -1,14 +1,19 @@
-# `parseUri` 2.0.0
+# parseUri 2.0.0
 
-`parseUri` is a mighty but tiny URI/URN/URL parser that retrieves the various parts that make up a URI (all of which are optional) from a given string. Its combination of accuracy, flexibility, and brevity is unrivaled (1KB min/gzip, with no dependencies).
+`parseUri` is a mighty but tiny URI/URN/URL parser that splits any URI into its parts (all of which are optional). Its combination of accuracy, flexibility, and brevity is unrivaled (1KB min/gzip, with no dependencies).
 
-`parseUri` makes a best case effort even with partial or invalid URIs. Compare this to JavaScript’s built-in [`URL`](https://developer.mozilla.org/en-US/docs/Web/API/URL) constructor:
+## Compared to built-in [`URL`](https://developer.mozilla.org/en-US/docs/Web/API/URL)
 
-- `URL` throws e.g. if not given a protocol, and in many other cases of valid (but not supported) and invalid URIs.
-- `URL`’s rules don’t allow correctly handling non-web protocols. For example, `URL` doesn’t throw on any of `'git://localhost:1234'`, `'ssh://myid@192.168.1.101'`, or `'t2ab:///path/entry'`, but it also doesn’t get their details correct since it treats everything after `<non-web-protocol>:` up to `?` or `#` as part of the `pathname`.
-- `parseUri` gives you many additional properties (`authority`, `userinfo`, `subdomain`, `domain`, `tld`, `resource`, `directory`, `filename`, `suffix`) that are not available from `URL`.
+* `URL` throws e.g. if not given a protocol, and in many other cases of valid (but not supported) and invalid URIs. `parseUri` makes a best case effort even with partial or invalid URIs and is extremely good with edge cases.
+* `URL`’s rules don’t allow correctly handling non-web protocols. For example, `URL` doesn’t throw on any of `'git://localhost:1234'`, `'ssh://myid@192.168.1.101'`, or `'t2ab:///path/entry'`, but it also doesn’t get their details correct since it treats everything after `<non-web-protocol>:` up to `?` or `#` as part of the `pathname`.
+* `parseUri` gives you many additional properties (`authority`, `userinfo`, `subdomain`, `domain`, `tld`, `resource`, `directory`, `filename`, `suffix`) that aren’t available from `URL`.
+* `parseUri` includes partial (extensible) support for second-level domains like in `'//example.co.uk'`.
 
-Here’s an illustration of what a `parseUri` result object’s properties contain and how they overlap:
+Conversely, `parseUri` is single-purpose and doesn’t do normalization. But of course you can pass URIs through a normalizer separately, if you need that. Or, if you wanted to create an exceptionally lightweight normalizer, `parseUri` would be a great base to build on top of. 😊
+
+## Results / URI parts
+
+Returns an object with 20 URI part properties plus `queryParams`, a [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) object that includes `.get(key)`, `.getAll(key)`, etc. Here’s an example of what each part contains:
 
 ```text
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────────────┐
@@ -29,9 +34,7 @@ Here’s an illustration of what a `parseUri` result object’s properties conta
 └──────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-Also included is the `queryParams` property, which is a [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) object and works just like `URL.prototype.searchParams`—it includes `.get(key)`, `.getAll(key)`, `.delete(key)`, etc.
-
-`parseUri` additionally supports IPv4 and IPv6 addresses, URNs, and many edge cases not shown here. It also has partial (extensible) support for second-level domains like in `'//example.co.uk'`. In this case, the `tld` value is `'co.uk'`, `domain` is `'example.co.uk'`, and `subdomain` is `''`.
+`parseUri` additionally supports IPv4 and IPv6 addresses, URNs, and many edge cases not shown here.
 
 ## Parsing modes
 
