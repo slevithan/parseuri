@@ -9,7 +9,7 @@
 * `parseUri` gives you many additional properties (`authority`, `userinfo`, `subdomain`, `domain`, `tld`, `resource`, `directory`, `filename`, `suffix`) that aren’t available from `URL`.
 * `parseUri` includes partial (extensible) support for second-level domains like in `'//example.co.uk'`.
 
-Conversely, `parseUri` is single-purpose and doesn’t do normalization. But of course you can pass URIs through a normalizer separately, if you need that. Or, if you wanted to create an exceptionally lightweight normalizer, `parseUri` would be a great base to build on top of. 😊
+Conversely, `parseUri` is single-purpose and doesn’t do normalization. But of course you can pass URIs through a normalizer separately, if you need that. Or, if you wanted to create an exceptionally lightweight URI normalizer, `parseUri` would be a great base to build on. 😊
 
 ## Results / URI parts
 
@@ -38,11 +38,11 @@ Returns an object with 20 URI part properties plus `queryParams`, a [`URLSearchP
 
 ## Parsing modes
 
-`parseUri` has two parsing modes: `'default'` and `'friendly'`. Default mode follows official URI rules. Friendly mode doesn’t require `'<protocol>:'`, `':'`, or `'//'` to signal the start of an authority, which allows handling human-friendly URLs like `'example.com/index.html'` as expected. For completeness, note that this change has several effects:
+`parseUri` has two parsing modes: `'default'` and `'friendly'`. Default mode follows official URI rules. Friendly mode doesn’t require `'<protocol>:'`, `':'`, or `'//'` to signal the start of an authority, which allows handling human-friendly URLs like `'example.com/index.html'` as expected. This change has several effects:
 
 - It allows starting a URI with an authority (as noted above).
-- Since the web protocols `http`, `https`, `ftp`, `ws`, and `wss` don’t require `'//'`, this also means that friendly mode extends this behavior to non-web protocols.
 - It precludes friendly mode from properly handling relative paths (that don’t start from root `'/'`) such as `'dir/file.html'`.
+- Since the web protocols `http`, `https`, `ws`, `wss`, and `ftp` don’t require `'//'`, this also means that friendly mode extends this behavior to non-web protocols.
 
 ## Usage examples
 
