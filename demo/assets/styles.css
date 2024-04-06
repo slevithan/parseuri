@@ -87,6 +87,10 @@ summary {
 	cursor: pointer;
 }
 
+abbr {
+  text-decoration: none;
+}
+
 .ascii-chart {
   white-space: pre;
   font-family: Consolas, 'Courier New', Courier, monospace;
@@ -178,10 +182,25 @@ td {
   word-break: normal;
 }
 
+.svg-icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: text-bottom;
+  fill: #666;
+}
+
+.different .svg-icon {
+  fill: #9a4040;
+}
+
 .no-wrap {
   text-wrap: nowrap;
 }
 
 .fw-normal {
   font-weight: normal;
+}
+
+.hidden {
+  display: none;
 }

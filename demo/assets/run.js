@@ -112,11 +112,15 @@ const libs = {
   urlStandard: '<code>URL</code>',
 };
 
+function svgIconHtml(icon) {
+  return `<svg class="svg-icon"><use xlink:href="#${icon}-icon"/></svg>`;
+}
+
 const outputMsg = {
   empty: '<span class="comparison-desc">empty</span>',
   equalsDefault: '<span class="comparison-desc">same as default</span>',
   equalsDefaultAll: '<span class="comparison-desc">all same as default</span>',
-  error: '<span class="no-wrap comparison-status">⚠️ throws</span>',
+  error: `<span class="no-wrap comparison-status">${svgIconHtml('warning')} throws</span>`,
   unavailable: '<span class="no-wrap comparison-status">✖️ ⁿ/ₐ</span>',
 };
 
@@ -418,7 +422,11 @@ function buildTableStr(key, {
       ${/* URL */''}
       ${urlStandardObj ?
         `<td class="${getKeyColor(key, parseUriObj, urlStandardObj, parseUriObjNormalizedByUrlStandard, {lib: libs.urlStandard})}">
-          ${printUriPart(urlStandardObj[key])}
+          ${/* hack for origin 'null' to make it clearer that parseUri's handling is intentional */
+            key === 'origin' && urlStandardObj[key] === 'null' ?
+            `<abbr title="parseUri doesn’t normalize results; URL sets origin to the string 'null' when protocol is not http[s]/ws[s]/ftp/file/blob">${svgIconHtml('info')}</abbr>
+              ${printUriPart(urlStandardObj[key])}` :
+            printUriPart(urlStandardObj[key])}
         </td>` :
         (key === firstKey ? unusedObjFullColumnCell : '')
       }
