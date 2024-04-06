@@ -6,6 +6,12 @@ describe('pathname', () => {
       filename: 'file.ext',
       suffix: 'ext',
     });
+    expect('\\dir\\file.ext').toMatchUriKeysInAllModes({
+      pathname: '\\dir\\file.ext',
+      directory: '\\dir\\',
+      filename: 'file.ext',
+      suffix: 'ext',
+    });
   });
 
   it('shoud end at ? or #', () => {
@@ -39,11 +45,24 @@ describe('pathname', () => {
     });
   });
 
+  it('should allow any forward and back slashes to mark directory segments', () => {
+    expect('//host/file').toMatchUriKeysInAllModes({pathname: '/file', filename: 'file'});
+    expect('//host\\file').toMatchUriKeysInAllModes({pathname: '\\file', filename: 'file'});
+    expect('//host/dir\\file').toMatchUriKeysInAllModes({pathname: '/dir\\file', filename: 'file'});
+    expect('//host\\dir/file').toMatchUriKeysInAllModes({pathname: '\\dir/file', filename: 'file'});
+  });
+
   describe('directory', () => {
     it('shoud allow root directory on its own', () => {
       expect('/').toMatchUriKeysInAllModes({
         pathname: '/',
         directory: '/',
+        filename: '',
+        suffix: '',
+      });
+      expect('\\').toMatchUriKeysInAllModes({
+        pathname: '\\',
+        directory: '\\',
         filename: '',
         suffix: '',
       });
@@ -107,6 +126,7 @@ describe('pathname', () => {
       expect('//host///').toMatchUriKeysInAllModes({directory: '///'});
       expect('/dir//file').toMatchUriKeysInAllModes({directory: '/dir//'});
       expect('/dir///dir/').toMatchUriKeysInAllModes({directory: '/dir///dir/'});
+      expect('/dir///\\dir/').toMatchUriKeysInAllModes({directory: '/dir///\\dir/'});
     });
   });
 
