@@ -112,16 +112,12 @@ const libs = {
   urlStandard: '<code>URL</code>',
 };
 
-function svgIconHtml(icon) {
-  return `<svg class="svg-icon"><use xlink:href="#${icon}-icon"/></svg>`;
-}
-
 const outputMsg = {
   empty: '<span class="comparison-desc">empty</span>',
   equalsDefault: '<span class="comparison-desc">same as default</span>',
   equalsDefaultAll: '<span class="comparison-desc">all same as default</span>',
   error: `<span class="no-wrap comparison-status">${svgIconHtml('warning')} throws</span>`,
-  unavailable: '<span class="no-wrap comparison-status">✖️ ⁿ/ₐ</span>',
+  unavailable: `<span class="no-wrap comparison-status">${svgIconHtml('x')} ⁿ/ₐ</span>`,
 };
 
 const colorClass = {
@@ -130,6 +126,10 @@ const colorClass = {
   neutral: 'neutral',
   different: 'different',
 };
+
+function svgIconHtml(icon) {
+  return `<svg class="svg-icon"><use xlink:href="#${icon}-icon"/></svg>`;
+}
 
 function getQueryKeyValue(value) {
   // URI.js uses null for keys not followed by '='
