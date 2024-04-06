@@ -106,7 +106,7 @@ uri.protocol === 'mailto';
 uri.hostname === '';
 uri.pathname === 'first@example.com,second@example.com';
 uri.queryParams.get('subject') === 'Subscribe';
-uri.queryParams.get('body') === 'Sign%20me%20up!';
+uri.queryParams.get('body') === 'Sign me up!';
 
 /* Also supports e.g.:
 https://[2001:db8:85a3::7334%en1]/ipv6-with-zone-identifier
