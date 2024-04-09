@@ -1,5 +1,5 @@
 //! parseUri 2.0.0; Steven Levithan; MIT License
-/* Mighty but tiny URI/URN/URL parser; splits any URI into its parts (all of which are optional).
+/* A mighty but tiny URI/URN/URL parser; splits any URI into its parts (all of which are optional).
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────────────┐
 │                                                  href                                                    │
 ├────────────────────────────────────────────────────────────────┬─────────────────────────────────────────┤
@@ -17,8 +17,7 @@
 "  https   ://   user   :   pass   @ sub1.sub2 . dom.com  : 8080   /p/a/t/h/  a.html    ?  q=1  #   hash   "
 └──────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 Also supports IPv4 and IPv6 addresses, URNs, and many edge cases not shown here. Includes partial
-(extensible) support for second-level domains like in '//example.co.uk'.
-*/
+(extensible) support for second-level domains like in '//example.co.uk' */
 
 /**
  * Splits any URI into its parts.
@@ -54,19 +53,14 @@ const blankUrnProps = {
 };
 
 function getParser(mode) {
-  // slashes and backslashes have lost meaning for the web protocols (http, https, ftp, ws, wss)
-  // and protocol-relative URLs. also handle multiple colons in protocol delimiter for security
-  const authorityDelimiter = String.raw`(?:(?:(?<=^(?:https?|ftp|wss?):):*|^:+)[\\/]*|^[\\/]{2,}|//)`;
+  // slashes and backslashes have lost meaning for web protocols (http, https, ws, wss, ftp) and
+  // protocol-relative URLs. also handle multiple colons in protocol delimiter for security
+  const authorityDelimiter = String.raw`(?:(?:(?<=^(?:https?|wss?|ftp):):*|^:+)[\\/]*|^[\\/]{2,}|//)`;
   const authority = {
-    default: {
-      start: `(?<hasAuth>${authorityDelimiter}`,
-      end: ')?',
-    },
-    friendly: {
-      start: `(?<hasAuth>${authorityDelimiter}?)`,
-      end: '',
-    },
+    default: {start: `(?<hasAuth>${authorityDelimiter}`, end: ')?'},
+    friendly: {start: `(?<hasAuth>${authorityDelimiter}?)`, end: ''},
   };
+  // see `free-spacing-regex.md`
   return RegExp(String.raw`^(?<origin>(?:(?<protocol>[a-z][^\s:@\\/?#.]*):)?${authority[mode].start}(?<authority>(?:(?<userinfo>(?<username>[^:@\\/?#]*)(?::(?<password>[^\\/?#]*))?)?@)?(?<host>(?<hostname>\d{1,3}(?:\.\d{1,3}){3}(?=[:\\/?#]|$)|\[[a-f\d]{0,4}(?::[a-f\d]{0,4}){2,7}(?:%[^\]]*)?\]|(?<subdomain>[^:\\/?#]*?)\.??(?<domain>(?:[^.:\\/?#]*\.)?(?<tld>[^.:\\/?#]*))(?=[:\\/?#]|$))?(?::(?<port>[^:\\/?#]*))?))${authority[mode].end})(?<resource>(?<pathname>(?<directory>(?:[^\\/?#]*[\\/])*)(?<filename>(?:[^.?#]+|\.(?![^.?#]+(?:[?#]|$)))*(?:\.(?<suffix>[^.?#]+))?))(?:\?(?<query>[^#]*))?(?:\#(?<fragment>.*))?)`, 'i');
 }
 
@@ -81,19 +75,14 @@ function setSld(obj) {
   const slds = Object.entries(obj).map(
     ([key, value]) => `(?:${value.trim().replace(/\s+/g, '|')})\\.${key}`
   ).join('|');
-  // could be embedded with changes in the main regex, but keep separate for simplicity and perf
   cache.sld = RegExp(String.raw`^(?<subdomain>.*?)\.??(?<domain>(?:[^.]*\.)?(?<tld>${slds}))$`, 'is');
 }
 
 /* Adds support for a very limited set of second-level domains like '.co.uk'. This default list is
 mostly for illustrative purposes; replace it if you need more extensive support. The URI.js library
-has a longer list that can be used directly in `parseUri`.
-```html
+has a longer list that can be used directly:
 <script src="https://cdn.jsdelivr.net/npm/urijs@1.19.11/src/SecondLevelDomains.js">
-<script>
-  parseUri.setSld(SecondLevelDomains.list);
-</script>
-``` */
+<script>parseUri.setSld(SecondLevelDomains.list);</script> */
 setSld({
   au: 'com edu gov id net org',
   uk: 'co gov me net org sch',
