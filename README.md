@@ -10,9 +10,9 @@
 * `URL` throws e.g. if not given a protocol, and in many other cases of valid (but not supported) and invalid URIs. `parseUri` makes a best case effort even with partial or invalid URIs and is extremely good with edge cases.
 * `URL`’s rules don’t allow correctly handling many non-web protocols. For example, `URL` doesn’t throw on any of `'git://localhost:1234'`, `'ssh://myid@192.168.1.101'`, or `'t2ab:///path/entry'`, but it also doesn’t get their details correct since it treats everything after `<non-web-protocol>:` up to `?` or `#` as part of the `pathname`.
 * `parseUri` includes a “friendly” parsing mode (in addition to its default mode) that handles human-friendly URLs like `'example.com/index.html'` as expected.
-* `parseUri` includes partial (extensible) support for second-level domains like in `'//example.co.uk'`.
+* `parseUri` includes extensible support for second-level domains that should be treated as part of the top-level domain.
 
-Conversely, `parseUri` is single-purpose and doesn’t apply any normalization. You can of course pass URIs through a normalizer separately, if you need that.
+Conversely, `parseUri` is single-purpose and doesn’t apply normalization. You can of course use a URI normalizer separately, if you need that.
 
 `parseUri`’s [demo page](https://slevithan.github.io/parseuri/demo/?urlStandard=true) allows easily comparing with `URL`’s results.
 

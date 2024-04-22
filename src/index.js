@@ -16,8 +16,8 @@
 │          │ │          │          │           │    │ tld │      │           │ │        │       │          │
 "  https   ://   user   :   pass   @ sub1.sub2 . dom.com  : 8080   /p/a/t/h/  a.html    ?  q=1  #   hash   "
 └──────────────────────────────────────────────────────────────────────────────────────────────────────────┘
-Also supports IPv4 and IPv6 addresses, URNs, and many edge cases not shown here. Includes partial
-(extensible) support for second-level domains like in '//example.co.uk' */
+Also supports IPv4/IPv6 addresses, URNs, and many edge cases not shown here. Includes extensible
+support for second-level domains that should be treated as part of the top-level domain */
 
 /**
  * @typedef {Object} ParseUriObject
@@ -48,7 +48,7 @@ Also supports IPv4 and IPv6 addresses, URNs, and many edge cases not shown here.
  * Splits any URI into its parts.
  * @param {string} uri Any URI.
  * @param {string} [mode] Parsing mode: `'default'` or `'friendly'`. Default follows official URI
- *   rules. Friendly handles human-friendly URLs like `'example.com/index.html'` as expected.
+ * rules. Friendly handles human-friendly URLs like `'example.com/index.html'` as expected.
  * @returns {ParseUriObject} Object with URI parts plus `queryParams`, a `URLSearchParams` object.
  */
 function parseUri(uri, mode = 'default') {

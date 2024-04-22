@@ -11,7 +11,7 @@
   <script src="assets/run.js"></script>
 </head>
 <body id="body">
-  <h1><a href="https://github.com/slevithan/parseuri"><code>parseUri</code></a> v2 demo</h1>
+  <h1><a href="https://github.com/slevithan/parseuri"><code>parseUri</code></a> demo</h1>
   <p><span class="badge">Context:</span>
     <code>parseUri</code> is a mighty but tiny URI/URN/URL parser that splits any URI into its
     parts (all of which are optional). Its combination of accuracy, flexibility, and brevity is
@@ -61,8 +61,8 @@
 "  https   ://   user   :   pass   @ sub1.sub2 . dom.com  : 8080   /p/a/t/h/  a.html    ?  q=1  #   hash   "
 └──────────────────────────────────────────────────────────────────────────────────────────────────────────┘</p>
     <p><code>parseUri</code> additionally supports IPv4 and IPv6 addresses, URNs, and many edge
-      cases not shown here. It also has partial (extensible) support for second-level domains like
-      in <code>'//example.co.uk'</code>.</p>
+      cases not shown here. It also includes extensible support for second-level domains that
+      should be treated as part of the top-level domain.</p>
     <p>This page simultaneously presents up to eight result set comparisons <i>(v2 default/friendly,
       v1 strict/loose, v2 default/v1 strict, v2 friendly/v1 loose, URL/v2-default,
       URL/v2-default-normalized-by-URL, URI.js/v2-default, URI.js/v2-default-normalized-by-URI.js)</i>
