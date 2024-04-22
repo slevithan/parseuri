@@ -1,60 +1,59 @@
 describe('hostname: special cases', () => {
   describe('second-level domain', () => {
     afterEach(() => {
-      // cleanup
+      parseUri.setSld({});
+    });
+
+    it('should allow modifying recognized second-level domains via setSld', () => {
       parseUri.setSld({
         uk: 'co gov me net org sch',
         au: 'com edu gov id net org',
       });
-    });
 
-    it('should modify domain levels when using a recognized second-level domain', () => {
       expect('//example.co.uk').toMatchUriKeysInAllModes({
         subdomain: '',
         domain: 'example.co.uk',
         tld: 'co.uk',
       });
-      expect('//www.example.co.uk').toMatchUriKeysInAllModes({
+      expect('//www.example.gov.uk').toMatchUriKeysInAllModes({
         subdomain: 'www',
-        domain: 'example.co.uk',
-        tld: 'co.uk',
+        domain: 'example.gov.uk',
+        tld: 'gov.uk',
       });
-      expect('//sub1.sub2.example.co.uk').toMatchUriKeysInAllModes({
+      expect('//sub1.sub2.example.com.au').toMatchUriKeysInAllModes({
         subdomain: 'sub1.sub2',
-        domain: 'example.co.uk',
-        tld: 'co.uk',
+        domain: 'example.com.au',
+        tld: 'com.au',
       });
     });
 
     it('should not modify domain levels when not using a recognized second-level domain', () => {
-      expect('//www.example.co.au').toMatchUriKeysInAllModes({
-        subdomain: 'www.example',
+      parseUri.setSld({
+        uk: 'co gov me net org sch',
+        au: 'com edu gov id net org',
+      });
+
+      expect('//example.co.au').toMatchUriKeysInAllModes({
+        subdomain: 'example',
         domain: 'co.au',
         tld: 'au',
       });
     });
 
-    it('should allow modifying recognized second-level domains via setSld', () => {
+    it('should replace recognized second-level domains via setSld with a new object', () => {
       parseUri.setSld({
-        pet: 'cat platypus',
+        uk: 'co gov me net org sch',
+        au: 'com edu gov id net org',
+      });
+      parseUri.setSld({
+        pet: 'duck platypus',
       });
 
-      expect('//example.cat.pet').toMatchUriKeysInAllModes({
-        subdomain: '',
-        domain: 'example.cat.pet',
-        tld: 'cat.pet',
-      });
       expect('//example.platypus.pet').toMatchUriKeysInAllModes({
         subdomain: '',
         domain: 'example.platypus.pet',
         tld: 'platypus.pet',
       });
-      expect('//example.dog.pet').toMatchUriKeysInAllModes({
-        subdomain: 'example',
-        domain: 'dog.pet',
-        tld: 'pet',
-      });
-      // replaced existing SLD list
       expect('//example.co.uk').toMatchUriKeysInAllModes({
         subdomain: 'example',
         domain: 'co.uk',
@@ -62,11 +61,15 @@ describe('hostname: special cases', () => {
       });
     });
 
-    it('should allow removing second-level domain support via setSld', () => {
+    it('should remove recognized second-level domains via setSld with an empty object', () => {
+      parseUri.setSld({
+        uk: 'co gov me net org sch',
+        au: 'com edu gov id net org',
+      });
       parseUri.setSld({});
 
-      expect('//www.example.co.uk').toMatchUriKeysInAllModes({
-        subdomain: 'www.example',
+      expect('//example.co.uk').toMatchUriKeysInAllModes({
+        subdomain: 'example',
         domain: 'co.uk',
         tld: 'uk',
       });

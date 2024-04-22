@@ -1,4 +1,4 @@
-//! parseUri 2.0.0; Steven Levithan; MIT License
+//! parseUri 2.0.0-next; Steven Levithan; MIT License
 /* A mighty but tiny URI/URN/URL parser; splits any URI into its parts (all of which are optional).
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────────────┐
 │                                                  href                                                    │
@@ -105,6 +105,9 @@ const cache = {
  * @param {Object} obj Object with TLDs as keys and their SLDs as space-separated strings.
  */
 function setSld(obj) {
+  // Note: The URI.js library has an SLD list that can be used directly:
+  // <script src="https://cdn.jsdelivr.net/npm/urijs@1.19.11/src/SecondLevelDomains.js">
+  // <script>parseUri.setSld(SecondLevelDomains.list);</script>
   const entries = Object.entries(obj);
   let parser;
   if (entries.length) {
@@ -115,15 +118,5 @@ function setSld(obj) {
   }
   cache.sld = parser;
 }
-
-/* Adds support for a very limited set of second-level domains like '.co.uk'. This default list is
-mostly for illustrative purposes; replace it if you need more extensive support. The URI.js library
-has a longer list that can be used directly:
-<script src="https://cdn.jsdelivr.net/npm/urijs@1.19.11/src/SecondLevelDomains.js">
-<script>parseUri.setSld(SecondLevelDomains.list);</script> */
-setSld({
-  au: 'com edu gov id net org',
-  uk: 'co gov me net org sch',
-});
 
 export {parseUri, setSld};
