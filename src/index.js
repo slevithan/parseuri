@@ -20,12 +20,36 @@ Also supports IPv4 and IPv6 addresses, URNs, and many edge cases not shown here.
 (extensible) support for second-level domains like in '//example.co.uk' */
 
 /**
+ * @typedef {Object} ParseUriObject
+ * @prop {string} href
+ * @prop {string} origin
+ * @prop {string} protocol
+ * @prop {string} authority
+ * @prop {string} userinfo
+ * @prop {string} username
+ * @prop {string} password
+ * @prop {string} host
+ * @prop {string} hostname
+ * @prop {string} subdomain
+ * @prop {string} domain
+ * @prop {string} tld
+ * @prop {string} port
+ * @prop {string} resource
+ * @prop {string} pathname
+ * @prop {string} directory
+ * @prop {string} filename
+ * @prop {string} suffix
+ * @prop {string} query
+ * @prop {string} fragment
+ * @prop {URLSearchParams} queryParams
+ */
+
+/**
  * Splits any URI into its parts.
- *
- * @param {String} uri Any URI.
- * @param {String} [mode] Parsing mode: `'default'` or `'friendly'`. Default follows official URI
+ * @param {string} uri Any URI.
+ * @param {string} [mode] Parsing mode: `'default'` or `'friendly'`. Default follows official URI
  *   rules. Friendly handles human-friendly URLs like `'example.com/index.html'` as expected.
- * @returns {Object} Object with URI parts. Includes `queryParams`, a `URLSearchParams` object.
+ * @returns {ParseUriObject} Object with URI parts plus `queryParams`, a `URLSearchParams` object.
  */
 function parseUri(uri, mode = 'default') {
   const {groups} = cache.parser[mode].exec(uri = uri.trim());
@@ -71,6 +95,15 @@ const cache = {
   },
 };
 
+/**
+ * Set recognized second-level domains, such as '.co.uk'.
+ * @example
+ * setSld({
+ *   au: 'com edu gov id net org',
+ *   uk: 'co gov me net org sch',
+ * });
+ * @param {Object} obj Object with TLDs as keys and their SLDs as space-separated strings.
+ */
 function setSld(obj) {
   const slds = Object.entries(obj).map(
     ([key, value]) => `(?:${value.trim().replace(/\s+/g, '|')})\\.${key}`
