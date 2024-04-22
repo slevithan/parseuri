@@ -66,7 +66,7 @@ function parseUri(uri, mode = 'default') {
   return Object.assign(result, {
     queryParams: new URLSearchParams(`?${result.query}`),
     // SLDs: handle known second-level domains like '.co.uk'
-    ...(cache.sld.exec(result.hostname)?.groups),
+    ...(cache.sld?.exec(result.hostname)?.groups),
   });
 }
 
@@ -105,10 +105,15 @@ const cache = {
  * @param {Object} obj Object with TLDs as keys and their SLDs as space-separated strings.
  */
 function setSld(obj) {
-  const slds = Object.entries(obj).map(
-    ([key, value]) => `(?:${value.trim().replace(/\s+/g, '|')})\\.${key}`
-  ).join('|');
-  cache.sld = RegExp(String.raw`^(?<subdomain>.*?)\.??(?<domain>(?:[^.]*\.)?(?<tld>${slds}))$`, 'is');
+  const entries = Object.entries(obj);
+  let parser;
+  if (entries.length) {
+    const slds = entries.map(
+      ([key, value]) => `(?:${value.trim().replace(/\s+/g, '|')})\\.${key}`
+    ).join('|');
+    parser = RegExp(String.raw`^(?<subdomain>.*?)\.??(?<domain>(?:[^.]*\.)?(?<tld>${slds}))$`, 'is');
+  }
+  cache.sld = parser;
 }
 
 /* Adds support for a very limited set of second-level domains like '.co.uk'. This default list is

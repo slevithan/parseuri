@@ -61,6 +61,16 @@ describe('hostname: special cases', () => {
         tld: 'uk',
       });
     });
+
+    it('should allow removing second-level domain support via setSld', () => {
+      parseUri.setSld({});
+
+      expect('//www.example.co.uk').toMatchUriKeysInAllModes({
+        subdomain: 'www.example',
+        domain: 'co.uk',
+        tld: 'uk',
+      });
+    });
   });
 
   describe('IPv4 address', () => {
