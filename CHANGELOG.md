@@ -1,3 +1,10 @@
+# v2.0.0-next
+
+**Improvements**
+- Added JSDoc TypeScript definitions.
+- Added support for removing second-level domain extensions by calling `setSld` with an empty object.
+- Removed the built-in but extremely limited second-level domain list that was included for illustrative purposes. Consider using [this list](https://github.com/slevithan/parseuri/blob/1427b889d6395aa42a954603a43f7ec467f14dcc/src/index.js#L108-L110) if you need SLD support.
+
 # v2.0.0
 
 **Breaking Changes**
@@ -10,14 +17,16 @@
 - Removed `parseUri.options` properties, including the ability to rename URI keys or provide a non-standard query parser.
 
 **Improvements**
+
 - Added six additional URI parts to result objects: `origin`, `host`, `subdomain`, `domain`, `tld`, `suffix`.
   - `tld` includes basic/extensible support for second-level domains.
 - Added support for IPv6 addresses.
-- Improved handling for web protocol (`http`, `https`, `ftp`, `ws`, `wss`) and protocol-relative URLs, for better parsing accuracy and security.
+- Improved handling for web protocol (`http`, `https`, `ws`, `wss`, `ftp`) and protocol-relative URLs, for better parsing accuracy and security.
 - Improved handling for URNs.
 - Added an extensive test suite.
 - Added a demo page for testing and comparison with v1, the built-in `URL` constructor, and URI.js.
 
 **Bug Fixes**
+
 - Fixed an issue where an `@` sign in the resource led to incorrect parsing.
-- Fixed numerous additional edge cases with atypical and invalid URIs.
+- Fixed numerous additional edge cases with atypical/invalid URIs.
