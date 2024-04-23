@@ -114,8 +114,8 @@ function setSld(obj) {
   }
   cache.sld = parser;
 }
-// Note: The URI.js library has a robust SLD list object that can be directly used:
-// > <script src="https://cdn.jsdelivr.net/npm/urijs@1.19.11/src/SecondLevelDomains.js">
+// Note: The URI.js library has a robust SLD list that can be used directly by `setSld`:
+// > <script src="https://cdn.jsdelivr.net/npm/urijs@1.19.11/src/SecondLevelDomains.js"></script>
 // > <script>parseUri.setSld(SecondLevelDomains.list)</script>
 
 export {parseUri, setSld};

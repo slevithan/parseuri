@@ -9,13 +9,13 @@ describe('host', () => {
   const hostResult = {
     host: hostStr,
     hostname: hostnameStr,
-    // this basic handling for domain parts doesn't support IPv4 addresses or second level domains
+    // this basic handling for domain parts doesn't support IPv4 addresses or second-level domains
     subdomain: hostnameStr.replace(/(?:\.?[^.]*\.)?[^.\]]*$|^\[.*\]$/s, ''),
     domain: /(?:[^.]*\.)?[^.\]]*$/.exec(hostnameStr)[0],
     tld: /[^.\]]*$/.exec(hostnameStr)[0],
-    // this would give a more flexible/accurate version of the domain parts than the basic regexes
-    // above, but I don't want to use `parseUri` to generate test data for its own tests
-    //...(({subdomain, domain, tld}) => ({subdomain, domain, tld}))(parseUri(`//${hostnameStr}`)),
+    // the following would give a more flexible/accurate version of the domain parts than the basic
+    // regexes above, but I don't want to use `parseUri` to generate test data for its own tests:
+    // ...(({subdomain, domain, tld}) => ({subdomain, domain, tld}))(parseUri(`//${hostnameStr}`)),
     port: portStr,
   };
   const emptyHostResult = {

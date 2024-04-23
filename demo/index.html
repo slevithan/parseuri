@@ -62,7 +62,8 @@
 └──────────────────────────────────────────────────────────────────────────────────────────────────────────┘</p>
     <p><code>parseUri</code> additionally supports IPv4 and IPv6 addresses, URNs, and many edge
       cases not shown here. It also includes extensible support for second-level domains that
-      should be treated as part of the top-level domain.</p>
+      should be treated as part of the top-level domain. You can see this in action after running
+      <code>parseUri.setSld(SecondLevelDomains.list); run();</code> in the console.</p>
     <p>This page simultaneously presents up to eight result set comparisons <i>(v2 default/friendly,
       v1 strict/loose, v2 default/v1 strict, v2 friendly/v1 loose, URL/v2-default,
       URL/v2-default-normalized-by-URL, URI.js/v2-default, URI.js/v2-default-normalized-by-URI.js)</i>
