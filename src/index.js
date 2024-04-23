@@ -46,13 +46,14 @@ support for second-level domains that should be treated as part of the top-level
 
 /**
  * Splits any URI into its parts.
- * @param {string} uri Any URI.
- * @param {string} [mode] Parsing mode: `'default'` or `'friendly'`. Default follows official URI
- * rules. Friendly handles human-friendly URLs like `'example.com/index.html'` as expected.
- * @returns {ParseUriObject} Object with URI parts plus `queryParams`, a `URLSearchParams` object.
+ * @param {string} uri
+ * @param {'default' | 'friendly'} [mode] Parsing mode. Default follows official URI rules.
+ * Friendly handles human-friendly URLs like `'example.com/index.html'` as expected.
+ * @returns {ParseUriObject} Object with URI parts, plus `queryParams`.
  */
 function parseUri(uri, mode = 'default') {
-  const {groups} = cache.parser[mode].exec(uri = uri.trim());
+  uri = uri.trim();
+  const {groups} = cache.parser[mode].exec(uri);
   const result = {
     href: uri,
     ...groups,
@@ -65,7 +66,7 @@ function parseUri(uri, mode = 'default') {
   Object.keys(result).forEach(key => result[key] ??= '');
   return Object.assign(result, {
     queryParams: new URLSearchParams(`?${result.query}`),
-    // SLDs: handle known second-level domains like '.co.uk'
+    // SLDs: handle known second-level domains
     ...(cache.sld?.exec(result.hostname)?.groups),
   });
 }
@@ -77,8 +78,8 @@ const blankUrnProps = {
 };
 
 function getParser(mode) {
-  // slashes and backslashes have lost meaning for web protocols (http, https, ws, wss, ftp) and
-  // protocol-relative URLs. also handle multiple colons in protocol delimiter for security
+  // forward and backslashes have lost all meaning for web protocols (http, https, ws, wss, ftp)
+  // and protocol-relative URLs. also handle multiple colons in protocol delimiter for security
   const authorityDelimiter = String.raw`(?:(?:(?<=^(?:https?|wss?|ftp):):*|^:+)[\\/]*|^[\\/]{2,}|//)`;
   const authority = {
     default: {start: `(?<hasAuth>${authorityDelimiter}`, end: ')?'},
@@ -105,18 +106,16 @@ const cache = {
  * @param {Object} obj Object with TLDs as keys and their SLDs as space-separated strings.
  */
 function setSld(obj) {
-  // Note: The URI.js library has an SLD list that can be used directly:
-  // <script src="https://cdn.jsdelivr.net/npm/urijs@1.19.11/src/SecondLevelDomains.js">
-  // <script>parseUri.setSld(SecondLevelDomains.list);</script>
   const entries = Object.entries(obj);
   let parser;
   if (entries.length) {
-    const slds = entries.map(
-      ([key, value]) => `(?:${value.trim().replace(/\s+/g, '|')})\\.${key}`
-    ).join('|');
-    parser = RegExp(String.raw`^(?<subdomain>.*?)\.??(?<domain>(?:[^.]*\.)?(?<tld>${slds}))$`, 'is');
+    const slds = entries.map(([key, value]) => `(?:${value.trim().replace(/\s+/g, '|')})\\.${key}`).join('|');
+    parser = RegExp(`^(?<subdomain>.*?)\\.??(?<domain>(?:[^.]*\\.)?(?<tld>${slds}))$`, 'is');
   }
   cache.sld = parser;
 }
+// Note: The URI.js library has a robust SLD list object that can be directly used:
+// > <script src="https://cdn.jsdelivr.net/npm/urijs@1.19.11/src/SecondLevelDomains.js">
+// > <script>parseUri.setSld(SecondLevelDomains.list)</script>
 
 export {parseUri, setSld};
