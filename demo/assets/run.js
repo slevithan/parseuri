@@ -184,6 +184,8 @@ function objMap(obj, fn) {
 }
 
 function prepareParseUriObj(str, mode = 'default') {
+  const useSlds = document.getElementById('useSlds').checked;
+  parseUri.setSld(useSlds ? SecondLevelDomains.list : {});
   const obj = parseUri(str, mode);
   return {
     ...htmlEncodeObjValues(obj),
@@ -367,6 +369,7 @@ function buildTableStr(key, {
     parseUriObjNormalizedByUriJs,
     isParseUriDefaultFriendlyEqual,
   }) {
+  const isCompareV1On = !!parseUriV1Obj;
   const parseUriV1Key = URIPartsMap[key].parseUriV1;
   const urlStandardKey = URIPartsMap[key].urlStandard;
   const uriJsKey = URIPartsMap[key].uriJs;
@@ -379,9 +382,9 @@ function buildTableStr(key, {
       <td class="no-wrap">
         <b>
           ${key}
-          ${parseUriV1Key ? '' : `<small><span class="badge success">NEW</span></small>`}
+          ${!isCompareV1On || parseUriV1Key ? '' : `<small><span class="badge success">NEW</span></small>`}
         </b>
-        ${!parseUriV1Key || key === parseUriV1Key ? '' :
+        ${!isCompareV1On || !parseUriV1Key || key === parseUriV1Key ? '' :
           `<br><small>└ <span class="badge">${libs.oldVersion}</span> ${parseUriV1Key}</small>`
         }
         ${!urlStandardObj || key === urlStandardKey ? '' :
@@ -394,7 +397,7 @@ function buildTableStr(key, {
       ${/* parseUri [default] */''}
       <td class="neutral">
         ${printUriPart(parseUriObj[key])}
-        ${!parseUriV1Key || parseUriV1Obj[key] === parseUriObj[key] ?
+        ${!isCompareV1On || !parseUriV1Key || parseUriV1Obj[key] === parseUriObj[key] ?
           '' :
           `<br><small><span class="badge ${getFriendlyModeBadgeColor(key, parseUriObj, parseUriV1Obj)}">${libs.oldVersion}</span></small> ${
             printUriPart(parseUriV1Obj[key], {isV1Value: true})
@@ -408,7 +411,7 @@ function buildTableStr(key, {
             outputMsg.equalsDefaultAll :
             printUriPart(parseUriFriendlyModeObj[key])
           }
-          ${!parseUriV1Key || parseUriV1FriendlyModeObj[key] === parseUriFriendlyModeObj[key] ?
+          ${!isCompareV1On || !parseUriV1Key || parseUriV1FriendlyModeObj[key] === parseUriFriendlyModeObj[key] ?
             '' :
             `<br><small><span class="badge ${getFriendlyModeBadgeColor(key, parseUriFriendlyModeObj, parseUriV1FriendlyModeObj)}">${libs.oldVersion}</span></small> ${
               parseUriV1FriendlyModeObj[key] === parseUriV1Obj[key] ?
@@ -455,15 +458,20 @@ function run() {
   const isFriendlyModeOn = document.getElementById('friendlyMode').checked;
   const isUrlStandardOn = document.getElementById('urlStandard').checked;
   const isUriJsOn = document.getElementById('uriJs').checked;
+  const isCompareV1On = document.getElementById('compareV1').checked;
+
+  let parseUriV1Obj, parseUriFriendlyModeObj, parseUriV1FriendlyModeObj,
+    isParseUriDefaultFriendlyEqual, urlStandardObj, uriJsObj, normalizedByUrlStandard,
+    parseUriObjNormalizedByUrlStandard, normalizedByUriJs, parseUriObjNormalizedByUriJs;
 
   const parseUriObj = prepareParseUriObj(uri, 'default');
-  const parseUriV1Obj = prepareParseUriV1Obj(uri, 'default');
-  let parseUriFriendlyModeObj, parseUriV1FriendlyModeObj, isParseUriDefaultFriendlyEqual,
-    urlStandardObj, uriJsObj, normalizedByUrlStandard,
-    parseUriObjNormalizedByUrlStandard, normalizedByUriJs, parseUriObjNormalizedByUriJs;
+  if (isCompareV1On) {
+    parseUriV1Obj = prepareParseUriV1Obj(uri, 'default');
+  }
+
   if (isFriendlyModeOn) {
     parseUriFriendlyModeObj = prepareParseUriObj(uri, 'friendly');
-    parseUriV1FriendlyModeObj = prepareParseUriV1Obj(uri, 'friendly');
+    parseUriV1FriendlyModeObj = isCompareV1On && prepareParseUriV1Obj(uri, 'friendly');
     isParseUriDefaultFriendlyEqual = comparePreparedUriObjs(parseUriObj, parseUriFriendlyModeObj);
   }
   if (isUrlStandardOn) {
@@ -524,19 +532,19 @@ function setOption(id, checked) {
 
 onload = () => {
   const q = new URL(location).searchParams;
-  const friendlyMode = 'friendlyMode';
-  const urlStandard = 'urlStandard';
-  const uriJs = 'uriJs';
 
-  if (q.get(friendlyMode) === 'true') {
-    document.getElementById(friendlyMode).checked = true;
-  }
-  if (q.get(urlStandard) === 'true') {
-    document.getElementById(urlStandard).checked = true;
-  }
-  if (q.get(uriJs) === 'true') {
-    document.getElementById(uriJs).checked = true;
-  }
+  const options = [
+    'friendlyMode',
+    'urlStandard',
+    'uriJs',
+    'compareV1',
+    'useSlds',
+  ];
+  options.forEach(option => {
+    if (q.get(option) === 'true') {
+      document.getElementById(option).checked = true;
+    }
+  });
 
   const uri = q.get('uri') ?? '';
   document.getElementById('uri-input').value = uri;

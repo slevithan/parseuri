@@ -55,6 +55,10 @@ body {
   background-color: #dfdfdf;
 }
 
+input[type='checkbox'] {
+  vertical-align: bottom;
+}
+
 a {
   color: #666;
   text-decoration: none;
