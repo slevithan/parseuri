@@ -1,25 +1,30 @@
 const URIPartsMap = {
   href: {
+    desc: 'The full (trimmed) URI',
     parseUriV1: 'source',
     uriJs: 'href',
     urlStandard: 'href',
   },
   origin: {
+    desc: 'Combines protocol and authority',
     parseUriV1: null,
     uriJs: 'origin',
     urlStandard: 'origin', // excludes userinfo
   },
   protocol: {
+    desc: 'Also called the scheme',
     parseUriV1: 'protocol',
     uriJs: 'protocol', // alias: `scheme`
     urlStandard: 'protocol', // includes trailing ':'
   },
   authority: {
+    desc: 'Combines userinfo and host',
     parseUriV1: 'authority',
     uriJs: 'authority',
     urlStandard: null,
   },
   userinfo: {
+    desc: 'Combines username and password. Deprecated by RFC3986.',
     parseUriV1: 'userInfo', // different casing
     uriJs: 'userinfo',
     urlStandard: null,
@@ -35,11 +40,13 @@ const URIPartsMap = {
     urlStandard: 'password',
   },
   host: {
+    desc: 'Combines hostname and port',
     parseUriV1: null,
     uriJs: 'host',
     urlStandard: 'host',
   },
   hostname: {
+    desc: 'Where to send the request',
     parseUriV1: 'host',
     uriJs: 'hostname',
     urlStandard: 'hostname',
@@ -50,11 +57,13 @@ const URIPartsMap = {
     urlStandard: null,
   },
   domain: {
+    desc: 'Includes tld',
     parseUriV1: null,
     uriJs: 'domain',
     urlStandard: null,
   },
   tld: {
+    desc: 'Top-level domain (ex: com from example.com). Can include second-level domain (ex: co.uk) if a list of SLDs is provided.',
     parseUriV1: null,
     uriJs: 'tld',
     urlStandard: null,
@@ -65,11 +74,13 @@ const URIPartsMap = {
     urlStandard: 'port', // removes if [80, 443] and protocol is [http, https]
   },
   resource: {
+    desc: 'Combines pathname, query, and fragment',
     parseUriV1: 'relative',
     uriJs: 'resource',
     urlStandard: null,
   },
   pathname: {
+    desc: 'Combines directory and filename',
     parseUriV1: 'path',
     uriJs: 'pathname', // alias: `path`
     urlStandard: 'pathname',
@@ -80,26 +91,31 @@ const URIPartsMap = {
     urlStandard: null,
   },
   filename: {
+    desc: 'Includes suffix',
     parseUriV1: 'file',
     uriJs: 'filename',
     urlStandard: null,
   },
   suffix: {
+    desc: 'File extension (ex: jpg from photo.jpg)',
     parseUriV1: null,
     uriJs: 'suffix',
     urlStandard: null,
   },
   query: {
+    desc: 'Excludes the leading ?',
     parseUriV1: 'query',
     uriJs: 'query', // also: `search` (but then includes leading '?')
     urlStandard: 'search', // includes leading '?'
   },
   fragment: {
+    desc: 'Excludes the leading #. This is used by the client and isn’t sent to the server.',
     parseUriV1: 'anchor',
     uriJs: 'fragment', // also: `hash` (but then includes leading '#')
     urlStandard: 'hash', // includes leading '#'
   },
   queryParams: {
+    desc: 'Object to easily access URL-decoded query parameters',
     parseUriV1: 'queryKey',
     uriJs: 'query(true)',
     urlStandard: 'searchParams',
@@ -129,6 +145,11 @@ const colorClass = {
 
 function svgIconHtml(icon) {
   return `<svg class="svg-icon"><use xlink:href="#${icon}-icon"/></svg>`;
+}
+
+function getPartDesc(part) {
+  const desc = URIPartsMap[part].desc;
+  return desc ? `<span class="part-desc"><abbr title="${desc}">&nbsp;${svgIconHtml('info')}</abbr></span>` : '';
 }
 
 function getQueryKeyValue(value) {
@@ -382,6 +403,7 @@ function buildTableStr(key, {
       <td class="no-wrap">
         <b>
           ${key}
+          ${getPartDesc(key)}
           ${!isCompareV1On || parseUriV1Key ? '' : `<small><span class="badge success">NEW</span></small>`}
         </b>
         ${!isCompareV1On || !parseUriV1Key || key === parseUriV1Key ? '' :
@@ -427,7 +449,7 @@ function buildTableStr(key, {
         `<td class="${getKeyColor(key, parseUriObj, urlStandardObj, parseUriObjNormalizedByUrlStandard, {lib: libs.urlStandard})}">
           ${/* hack for origin 'null' to make it clearer that parseUri's handling is intentional */
             key === 'origin' && urlStandardObj[key] === 'null' ?
-            `<abbr title="parseUri doesn’t normalize results; URL sets origin to the string 'null' when protocol is not http[s]/ws[s]/ftp/file/blob">${svgIconHtml('info')}</abbr>
+            `<abbr class="info-icon" title="parseUri doesn’t normalize results; URL sets origin to the string 'null' when protocol is not http[s]/ws[s]/ftp/file/blob">${svgIconHtml('info')}</abbr>
               ${printUriPart(urlStandardObj[key])}` :
             printUriPart(urlStandardObj[key])}
         </td>` :

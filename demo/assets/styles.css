@@ -15,6 +15,17 @@ body {
   font-weight: bold;
 }
 
+.info-icon {
+  float: right;
+}
+
+.part-desc {
+  float: right;
+  position: relative;
+  font-size: 0.7rem;
+  top: 2px;
+}
+
 .different, .badge.different {
   background-color: #ff6b6b;
 }
