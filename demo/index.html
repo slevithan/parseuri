@@ -20,8 +20,8 @@
     into its parts (all of which are optional). Its combination of accuracy, comprehensiveness, and
     brevity is unrivaled.</p>
   <p><span class="badge">Demo:</span>
-    This demo page is for testing and comparing between <code>parseUri</code> v2, v1, the built-in
-    <a href="https://developer.mozilla.org/en-US/docs/Web/API/URL"><code>URL</code></a>
+    This demo page is for testing and comparing between the latest <code>parseUri</code>, v1, the
+    built-in <a href="https://developer.mozilla.org/en-US/docs/Web/API/URL"><code>URL</code></a>
     constructor, and <a href="https://github.com/medialize/URI.js">URI.js</a> (a much larger
     library).</p>
   <p><span class="badge">Parsing modes:</span>
@@ -64,21 +64,7 @@
 "  https   ://   user   :   pass   @ sub1.sub2 . dom.com  : 8080   /p/a/t/h/  a.html    ?  q=1  #   hash   "
 └──────────────────────────────────────────────────────────────────────────────────────────────────────────┘</p>
     <p><code>parseUri</code> additionally supports IPv4 and IPv6 addresses, URNs, and many edge
-      cases not shown here. It also supports providing a list of second-level domains that should
-      be treated as part of the top-level domain (ex: <code>co.uk</code>).</p>
-    <p><span class="badge">About:</span>
-      This page simultaneously presents up to eight result set comparisons <i>(v2 default/friendly,
-      v1 strict/loose, v2 default/v1 strict, v2 friendly/v1 loose, URL/v2-default,
-      URL/v2-default-normalized-by-URL, URI.js/v2-default, URI.js/v2-default-normalized-by-URI.js)</i>
-      across 21 properties that use four different sets of partially-overlapping property names
-      (from v2, v1, <code>URL</code>, and URI.js objects). It also shows when <code>URL</code> or
-      URI.js throw, highlights when default and friendly mode are totally equal, and highlights when
-      the <code>queryParams</code> object represents the same values in different formats across
-      libraries (there are three formats across the different results: <code>parseUri</code> v2 and
-      <code>URL</code> use
-      <a href="https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams"><code>URLSearchParams</code></a>,
-      <code>parseUri</code> v1 uses an object with string values, and URI.js uses an object whose
-      values can be strings, arrays, and/or nulls).</p>
+      cases not shown here.</p>
   </details>
   <p>
     <span class="badge">Options:</span>
