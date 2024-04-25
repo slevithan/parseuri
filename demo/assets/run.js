@@ -63,7 +63,7 @@ const URIPartsMap = {
     urlStandard: null,
   },
   tld: {
-    desc: 'Top-level domain (ex: com from example.com). Can include second-level domain (ex: co.uk) if a list of SLDs is provided.',
+    desc: 'Top-level domain (ex: com from example.com). Can include second-level domain (ex: co.uk) if a list is provided.',
     parseUriV1: null,
     uriJs: 'tld',
     urlStandard: null,
@@ -205,8 +205,8 @@ function objMap(obj, fn) {
 }
 
 function prepareParseUriObj(str, mode = 'default') {
-  const useSlds = document.getElementById('useSlds').checked;
-  parseUri.setSld(useSlds ? SecondLevelDomains.list : {});
+  const extendTlds = document.getElementById('extendTlds').checked;
+  parseUri.setTlds(extendTlds ? SecondLevelDomains.list : {});
   const obj = parseUri(str, mode);
   return {
     ...htmlEncodeObjValues(obj),
@@ -560,7 +560,7 @@ onload = () => {
     'urlStandard',
     'uriJs',
     'compareV1',
-    'useSlds',
+    'extendTlds',
   ];
   options.forEach(option => {
     if (q.get(option) === 'true') {

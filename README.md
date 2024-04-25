@@ -1,5 +1,9 @@
 # parseUri 2.1.0
 
+<style>
+pre {font-size: 0.9em;}
+</style>
+
 `parseUri` is a mighty but tiny JavaScript URI/URN/URL parser that splits any URI into its parts (all of which are optional). Its combination of accuracy, comprehensiveness, and brevity is unrivaled (1KB min/gzip, with no dependencies).
 
 ## Compared to the built-in [`URL`](https://developer.mozilla.org/en-US/docs/Web/API/URL)
@@ -10,9 +14,9 @@
 * `URL` throws e.g. if not given a protocol, and in many other cases of valid (but not supported) and invalid URIs. `parseUri` makes a best case effort even with partial or invalid URIs and is extremely good with edge cases.
 * `URL`’s rules don’t allow correctly handling many non-web protocols. For example, `URL` doesn’t throw on any of `'git://localhost:1234'`, `'ssh://myid@192.168.1.101'`, or `'t2ab:///path/entry'`, but it also doesn’t get their details correct since it treats everything after `<non-web-protocol>:` up to `?` or `#` as part of the `pathname`.
 * `parseUri` includes a “friendly” parsing mode (in addition to its default mode) that handles human-friendly URLs like `'example.com/index.html'` as expected.
-* `parseUri` includes extensible support for second-level domains that should be treated as part of the top-level domain.
+* `parseUri` supports providing a list of second-level domains that should be treated as part of the top-level domain (ex: `co.uk`).
 
-Conversely, `parseUri` is single-purpose and doesn’t apply normalization. You can of course use a URI normalizer separately, if you need that.
+Conversely, `parseUri` is single-purpose and doesn’t apply normalization. You can of course use a URI normalizer separately, or build one on top of `parseUri`.
 
 `parseUri`’s [demo page](https://slevithan.github.io/parseuri/demo/?urlStandard=true) allows easily comparing with `URL`’s results.
 
@@ -119,11 +123,11 @@ uri.queryParams.get('subject') === 'Subscribe';
 uri.queryParams.get('body') === 'Sign me up!';
 
 /* Also supports e.g.:
-https://[2001:db8:85a3::7334%en1]/ipv6-with-zone-identifier
-git://localhost:1234
-file:///path/file
-tel:+1-800-555-1212
-urn:uuid:c5542ab6-3d96-403e-8e6b-b8bb52f48d9a?q=x
+- https://[2001:db8:85a3::7334%en1]/ipv6-with-zone-identifier
+- git://localhost:1234
+- file:///path/file
+- tel:+1-800-555-1212
+- urn:uuid:c5542ab6-3d96-403e-8e6b-b8bb52f48d9a?q=x
 */
 ```
 

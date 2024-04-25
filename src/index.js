@@ -16,8 +16,8 @@
 │          │ │          │          │           │    │ tld │      │           │ │        │       │          │
 "  https   ://   user   :   pass   @ sub1.sub2 . dom.com  : 8080   /p/a/t/h/  a.html    ?  q=1  #   hash   "
 └──────────────────────────────────────────────────────────────────────────────────────────────────────────┘
-Also supports IPv4/IPv6 addresses, URNs, and many edge cases not shown here. Includes extensible
-support for second-level domains that should be treated as part of the top-level domain */
+Also supports IPv4/IPv6 addresses, URNs, and many edge cases not shown here. Supports providing a
+list of second-level domains that should be treated as part of the top-level domain (ex: co.uk) */
 
 /**
  * @typedef {Object} ParseUriObject
@@ -65,9 +65,8 @@ function parseUri(uri, mode = 'default') {
   // replace `undefined` for non-participating capturing groups
   Object.keys(result).forEach(key => result[key] ??= '');
   return Object.assign(result, {
+    ...(cache.tlds?.exec(result.hostname)?.groups),
     queryParams: new URLSearchParams(`?${result.query}`),
-    // SLDs: handle known second-level domains
-    ...(cache.sld?.exec(result.hostname)?.groups),
   });
 }
 
@@ -97,25 +96,25 @@ const cache = {
 };
 
 /**
- * Set recognized second-level domains, such as '.co.uk'.
+ * Set second-level domains recognized as part of the TLD (ex: co.uk).
  * @example
- * setSld({
+ * setTlds({
  *   au: 'com edu gov id net org',
  *   uk: 'co gov me net org sch',
  * });
  * @param {Object} obj Object with TLDs as keys and their SLDs as space-separated strings.
  */
-function setSld(obj) {
+function setTlds(obj) {
   const entries = Object.entries(obj);
   let parser;
   if (entries.length) {
-    const slds = entries.map(([key, value]) => `(?:${value.trim().replace(/\s+/g, '|')})\\.${key}`).join('|');
-    parser = RegExp(`^(?<subdomain>.*?)\\.??(?<domain>(?:[^.]*\\.)?(?<tld>${slds}))$`, 'is');
+    const tlds = entries.map(([key, value]) => `(?:${value.trim().replace(/\s+/g, '|')})\\.${key}`).join('|');
+    parser = RegExp(`^(?<subdomain>.*?)\\.??(?<domain>(?:[^.]*\\.)?(?<tld>${tlds}))$`, 'is');
   }
-  cache.sld = parser;
+  cache.tlds = parser;
 }
-// Note: The URI.js library has a robust SLD list that can be used directly by `setSld`:
+// Note: The URI.js library has a robust list that can be used directly by `setTlds`:
 // > <script src="https://cdn.jsdelivr.net/npm/urijs@1.19.11/src/SecondLevelDomains.js"></script>
-// > <script>parseUri.setSld(SecondLevelDomains.list)</script>
+// > <script>parseUri.setTlds(SecondLevelDomains.list)</script>
 
-export {parseUri, setSld};
+export {parseUri, setTlds};

@@ -1,10 +1,16 @@
-# v2.1.0
+# vNext
+
+This is a minor update, but includes a breaking change for a minor feature.
+
+**Breaking Changes**
+
+- Renamed `setSld` as `setTlds`, and removed the extremely limited, built-in list of top-level domains that was included for illustrative purposes.
 
 **Improvements**
 
 - Added JSDoc TypeScript definitions.
-- Added support for removing second-level domain extensions by calling `setSld` with an empty object.
-- For better predictability, removed the built-in but extremely limited second-level domain list that was included for illustrative purposes. Consider using [this list](https://github.com/slevithan/parseuri/blob/1f681a19829339035457ad922ce27fb22b0acaf7/src/index.js#L117-L119) if you need SLD support.
+- Added the ability to remove top-level domain extensions by calling `setTlds` with an empty object.
+- Improved the demo page with additional options, etc.
 
 # v2.0.0
 
