@@ -31,12 +31,12 @@ This is a major, breaking change that comes 17 years after v1.2.2. It updates `p
 
 **New Features**
 
-- Added six additional URI parts to result objects: `origin`, `host`, `subdomain`, `domain`, `tld`, `suffix`.
-  - `tld` includes limited/extensible support for second-level domains.
+- Added six new URI parts to result objects: `origin`, `host`, `subdomain`, `domain`, `tld`, `suffix`.
+  - `tld` includes limited/extensible support for second-level domains that should be treated as part of the top-level domain (ex: `co.uk`).
+- Added support for IPv6 addresses.
 
 **Improvements**
 
-- Added support for IPv6 addresses.
 - Improved handling for web protocol (`http`, `https`, `ws`, `wss`, `ftp`) and protocol-relative URLs, for parsing accuracy and security.
 - Improved handling for URNs.
 - Added an extensive test suite.
