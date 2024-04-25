@@ -1,6 +1,6 @@
 # parseUri 2.1.0
 
-`parseUri` is a mighty but tiny URI/URN/URL parser that splits any URI into its parts (all of which are optional). Its combination of accuracy, flexibility, and brevity is unrivaled (1KB min/gzip, with no dependencies).
+`parseUri` is a mighty but tiny JavaScript URI/URN/URL parser that splits any URI into its parts (all of which are optional). Its combination of accuracy, comprehensiveness, and brevity is unrivaled (1KB min/gzip, with no dependencies).
 
 ## Compared to the built-in [`URL`](https://developer.mozilla.org/en-US/docs/Web/API/URL)
 
