@@ -108,7 +108,9 @@ function setTlds(obj) {
   const entries = Object.entries(obj);
   let parser;
   if (entries.length) {
-    const tlds = entries.map(([key, value]) => `(?:${value.trim().replace(/\s+/g, '|')})\\.${key}`).join('|');
+    const tlds = entries.map(
+      ([key, value]) => `(?:${value.trim().replace(/\s+/g, '|').replace(/\./g, '\\.')})\\.${key}`
+    ).join('|');
     parser = RegExp(`^(?<subdomain>.*?)\\.??(?<domain>(?:[^.]*\\.)?(?<tld>${tlds}))$`, 'is');
   }
   cache.tlds = parser;

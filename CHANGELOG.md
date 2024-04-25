@@ -4,12 +4,16 @@ This is a minor update, but includes a breaking change for a minor feature.
 
 **Breaking Changes**
 
-- Renamed `setSld` as `setTlds`, and removed the extremely limited, built-in list of top-level domains that was included for illustrative purposes.
+- Renamed `setSld` as `setTlds`, and removed the extremely limited, built-in list of top-level domains (TLDs) that was included for illustrative purposes.
+
+**New Features**
+
+- Can remove TLD extensions by calling `setTlds` with an empty object.
+- Can provide multi-level extentions for TLDs.
 
 **Improvements**
 
 - Added JSDoc TypeScript definitions.
-- Added the ability to remove top-level domain extensions by calling `setTlds` with an empty object.
 - Improved the demo page with additional options, etc.
 
 # v2.0.0
@@ -25,15 +29,18 @@ This is a major, breaking change that comes 17 years after v1.2.2. It updates `p
 - Friendly parsing mode (formerly called loose mode) is now consistent with default mode in considering `'/entry'` to include `{filename: 'entry'}` rather than treating `'entry'` as part of `directory`.
 - Removed `parseUri.options` properties, including the ability to rename URI keys or provide a non-standard query parser.
 
-**Improvements**
+**New Features**
 
 - Added six additional URI parts to result objects: `origin`, `host`, `subdomain`, `domain`, `tld`, `suffix`.
   - `tld` includes limited/extensible support for second-level domains.
+
+**Improvements**
+
 - Added support for IPv6 addresses.
-- Improved handling for web protocol (`http`, `https`, `ws`, `wss`, `ftp`) and protocol-relative URLs, for better parsing accuracy and security.
+- Improved handling for web protocol (`http`, `https`, `ws`, `wss`, `ftp`) and protocol-relative URLs, for parsing accuracy and security.
 - Improved handling for URNs.
 - Added an extensive test suite.
-- Added a demo page for testing and comparison with v1, the built-in `URL` constructor, and URI.js.
+- Added a demo page for testing and comparison with v1, the built-in `URL` constructor, and other libraries.
 
 **Bug Fixes**
 

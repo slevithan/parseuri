@@ -74,6 +74,33 @@ describe('hostname: special cases', () => {
         tld: 'uk',
       });
     });
+
+    it('should allow multi-level TLD extensions via setTlds', () => {
+      parseUri.setTlds({
+        test: 'multi.level',
+      });
+
+      expect('//example.multi.level.test').toMatchUriKeysInAllModes({
+        subdomain: '',
+        domain: 'example.multi.level.test',
+        tld: 'multi.level.test',
+      });
+      expect('//example.multi-level.test').toMatchUriKeysInAllModes({
+        subdomain: 'example',
+        domain: 'multi-level.test',
+        tld: 'test',
+      });
+      expect('//example.level.test').toMatchUriKeysInAllModes({
+        subdomain: 'example',
+        domain: 'level.test',
+        tld: 'test',
+      });
+      expect('//example.multi.test').toMatchUriKeysInAllModes({
+        subdomain: 'example',
+        domain: 'multi.test',
+        tld: 'test',
+      });
+    });
   });
 
   describe('IPv4 address', () => {
