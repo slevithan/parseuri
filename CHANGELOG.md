@@ -1,10 +1,10 @@
-# v2.0.0-next
+# v2.1.0
 
 **Improvements**
 
 - Added JSDoc TypeScript definitions.
 - Added support for removing second-level domain extensions by calling `setSld` with an empty object.
-- For better predictability, removed the built-in but extremely limited second-level domain list that was included for illustrative purposes. Consider using [this list](https://github.com/slevithan/parseuri/blob/1427b889d6395aa42a954603a43f7ec467f14dcc/src/index.js#L108-L110) if you need SLD support.
+- For better predictability, removed the built-in but extremely limited second-level domain list that was included for illustrative purposes. Consider using [this list](https://github.com/slevithan/parseuri/blob/1f681a19829339035457ad922ce27fb22b0acaf7/src/index.js#L117-L119) if you need SLD support.
 
 # v2.0.0
 
