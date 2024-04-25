@@ -1,10 +1,10 @@
 describe('hostname: special cases', () => {
-  describe('second-level domain', () => {
+  describe('top-level domain', () => {
     afterEach(() => {
       parseUri.setTlds({});
     });
 
-    it('should allow modifying second-level domains recognized as part of the TLD via setTlds', () => {
+    it('should allow recognizing SLDs as part of the TLD via setTlds', () => {
       parseUri.setTlds({
         uk: 'co gov me net org sch',
         au: 'com edu gov id net org',
@@ -27,7 +27,7 @@ describe('hostname: special cases', () => {
       });
     });
 
-    it('should not modify domain levels when not using a recognized second-level domain', () => {
+    it('should not adjust domain parts when not using a recognized TLD', () => {
       parseUri.setTlds({
         uk: 'co gov me net org sch',
         au: 'com edu gov id net org',
@@ -40,7 +40,7 @@ describe('hostname: special cases', () => {
       });
     });
 
-    it('should replace recognized second-level domains after calling setTlds with a new object', () => {
+    it('should replace recognized TLDs after calling setTlds with a new object', () => {
       parseUri.setTlds({
         uk: 'co gov me net org sch',
         au: 'com edu gov id net org',
@@ -61,7 +61,7 @@ describe('hostname: special cases', () => {
       });
     });
 
-    it('should remove recognized second-level domains after calling setTlds with an empty object', () => {
+    it('should remove recognized TLDs after calling setTlds with an empty object', () => {
       parseUri.setTlds({
         uk: 'co gov me net org sch',
         au: 'com edu gov id net org',
