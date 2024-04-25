@@ -1,4 +1,4 @@
-# vNext
+# v3.0.0
 
 This is a minor update, but includes a breaking change for a minor feature.
 

@@ -1,4 +1,4 @@
-//! parseUri 2.1.0; Steven Levithan; MIT License
+//! parseUri 3.0.0; Steven Levithan; MIT License
 /* A mighty but tiny URI/URN/URL parser; splits any URI into its parts (all of which are optional).
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────────────┐
 │                                                  href                                                    │
@@ -115,7 +115,7 @@ function setTlds(obj) {
   }
   cache.tlds = parser;
 }
-// Note: The URI.js library has a robust list that can be used directly by `setTlds`:
+// Note: The library URI.js has a robust list that can be used directly by `setTlds`:
 // > <script src="https://cdn.jsdelivr.net/npm/urijs@1.19.11/src/SecondLevelDomains.js"></script>
 // > <script>parseUri.setTlds(SecondLevelDomains.list)</script>
 

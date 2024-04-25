@@ -1,8 +1,4 @@
-# parseUri 2.1.0
-
-<style>
-pre {font-size: 0.9em;}
-</style>
+# parseUri 3.0.0
 
 `parseUri` is a mighty but tiny JavaScript URI/URN/URL parser that splits any URI into its parts (all of which are optional). Its combination of accuracy, comprehensiveness, and brevity is unrivaled (1KB min/gzip, with no dependencies).
 

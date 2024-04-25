@@ -1,8 +1,8 @@
-Since it's not straightforward to strip whitespace from a template literal using JavaScript minification tools, the free-spacing version of this regex pattern is preserved here for readability. To update it, change the code here first, then simply remove all whitespace within `` String.raw`...` `` before inserting the result into `index.js`.
+Since it’s not straightforward to strip whitespace from a template literal using JavaScript minification tools, the free-spacing version of this regex pattern is preserved here for readability. To update it, change the code here first, then simply remove all whitespace within `` String.raw`...` `` before inserting the result into `index.js`.
 
 ```js
-// protocol always excludes dot for consistency with friendly mode (which needs to exclude it
-// to handle 'example.com:port' without a preceeding '//' or ':')
+// protocol always excludes dot for consistency with friendly mode (which needs to exclude it to
+// handle 'example.com:port' without a preceeding '//' or ':')
 String.raw`
 ^
 (?<origin>
