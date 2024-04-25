@@ -45,7 +45,7 @@ Here’s an example of what each part contains:
 
 ## Parsing modes
 
-`parseUri` has two parsing modes: `'default'` and `'friendly'`. Default mode follows official URI rules. Friendly mode doesn’t require `'<protocol>:'`, `':'`, or `'//'` to signal the start of an authority, which allows handling human-friendly URLs like `'example.com/index.html'` as expected. This change has several effects:
+`parseUri` has two parsing modes: default and friendly. The default mode follows official URI rules. Friendly mode doesn’t require `'<protocol>:'`, `':'`, or `'//'` to signal the start of an authority, which allows handling human-friendly URLs like `'example.com/file.html'` as expected. This change has several effects:
 
 - It allows starting a URI with an authority (as noted above).
 - It precludes friendly mode from properly handling relative paths (that don’t start from root `'/'`) such as `'dir/file.html'`.
