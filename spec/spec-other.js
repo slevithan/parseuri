@@ -14,7 +14,7 @@ describe('fragment', () => {
   });
 
   // this applies to trailing whitespace in any URI, not just those with a fragment
-  it('shoud ignore trailing whitespace', () => {
+  it('shoud exclude trailing whitespace', () => {
     expect('#hash \t\n ').toMatchUriKeysInAllModes({fragment: 'hash'});
   });
 });
@@ -27,7 +27,7 @@ describe('href', () => {
   });
 
   // this applies to leading and trailing whitespace in any URI
-  it('shoud ignore leading and trailing whitespace', () => {
+  it('shoud exclude leading and trailing whitespace', () => {
     expect(` \t\n ${href} \t\n `).toMatchUriKeysInAllModes({href});
   });
 });

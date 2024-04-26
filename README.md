@@ -41,7 +41,7 @@ Here’s an example of what each part contains:
 └──────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-`parseUri` additionally supports IPv4 and IPv6 addresses, URNs, and many edge cases not shown here.
+`parseUri` additionally supports IPv4 and IPv6 addresses, URNs, and many edge cases not shown here. See [tests](https://slevithan.github.io/parseuri/spec/).
 
 ## Parsing modes
 

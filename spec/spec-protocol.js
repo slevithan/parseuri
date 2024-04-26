@@ -17,7 +17,7 @@ describe('protocol', () => {
   });
 
   // this applies to leading whitespace in any URI, not just those with a protocol
-  it('should ignore leading whitespace', () => {
+  it('should exclude leading whitespace', () => {
     expect(' \t\n http:').toMatchUriKeysInAllModes({protocol: 'http'});
   });
 

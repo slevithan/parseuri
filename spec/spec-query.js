@@ -68,13 +68,13 @@ describe('queryParams', () => {
     expect(parseUri('?=x&=').queryParams.getAll('')).toEqual(['x', '']);
   });
 
-  it('should allow missing keys (blank between &)', () => {
+  it('should allow missing keys (nothing between &)', () => {
     const {queryParams} = parseUri('?&q=&&');
     expect(queryParams.getAll('q')).toEqual(['']);
     expect(queryParams.size).toBe(1);
   });
 
-  it('should allow ? in query', () => {
+  it('should allow ? in query keys and values', () => {
     expect(parseUri('??q=x').queryParams.get('?q')).toBe('x');
     expect(parseUri('?q?=x').queryParams.get('q?')).toBe('x');
     expect(parseUri('?q=?').queryParams.get('q')).toBe('?');
