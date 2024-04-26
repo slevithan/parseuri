@@ -5,10 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Universal URI parser: parseUri</title>
   <link rel="stylesheet" href="assets/styles.css">
-  <script src="../dist/parseuri.min.js"></script>
-  <script src="assets/parseuri-v1.2.2-for-test.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/urijs@1.19.11/src/URI.min.js"></script>
-  <script src="assets/run.js"></script>
 </head>
 <body>
   <h1>
@@ -21,7 +17,7 @@
     into its parts (all of which are optional). Its combination of accuracy, comprehensiveness, and
     brevity is unrivaled.</p>
   <p><span class="badge">Demo:</span>
-    This demo page is for testing and comparing between the latest <code>parseUri</code>, v1, the
+    This demo page is for testing <code>parseUri</code> and comparing its results with v1, the
     built-in <a href="https://developer.mozilla.org/en-US/docs/Web/API/URL"><code>URL</code></a>
     constructor, and <a href="https://github.com/medialize/URI.js">URI.js</a> (a much larger
     library).</p>
@@ -67,6 +63,28 @@
     <p><code>parseUri</code> additionally supports IPv4 and IPv6 addresses, URNs, and many edge
       cases not shown here. See <a href="../spec/index.html">tests</a>.</p>
   </details>
+  <details id="examples">
+    <summary>Show examples</summary>
+    <ul>
+      <li><a href="#">https://a.b.site.co.uk:80/path/to/my.img.jpg?q=x&amp;q=#hash</a></li>
+      <li><a href="#">ftp://user:pass@site.com/~user/file.txt</a></li>
+      <li><a href="#">//protocol-relative.url/🖤</a></li>
+      <li><a href="#">ssh://myid@192.168.1.101</a></li>
+      <li><a href="#">mailto:me@my.com?subject=Hey&amp;body=Sign%20me%20up!</a></li>
+      <li><a href="#">https://[db8:85a3::7334]:80?q=x</a></li>
+      <li><a href="#">https://[db8:85a3::7334%en1]/ipv6-zone-identifier</a></li>
+      <li><a href="#">git://localhost:123</a></li>
+      <li><a href="#">file:///path/file</a></li>
+      <li><a href="#">file://host/path/file</a></li>
+      <li><a href="#">../path/to/file.html?q=x</a></li>
+      <li><a href="#">example.com/file.html</a></li>
+      <li><a href="#">urn:isbn:0451450523</a></li>
+      <li><a href="#">tel:+1-800-555-0123</a></li>
+      <li><a href="#">http:\\\///site.com:0/web-protocol-edge-cases</a></li>
+      <li><a href="#">non-web-protocol:\\\///site.com:0/</a></li>
+      <li><a href="#">http:query-edge-cases??q=a&amp;&amp;?q&amp;q=&amp;=b</a></li>
+    </ul>
+  </details>
   <p>
     <span class="badge">Options:</span>
     <small>
@@ -76,7 +94,7 @@
   </p>
   <div class="table-container">
     <div>
-      <input type="text" id="uri-input" oninput="setInput(this.value)" placeholder="Type URI...">
+      <input type="text" id="uri-input" oninput="setUri(this.value)" placeholder="Type URI...">
     </div>
     <table id="uri-table">
       <thead>
@@ -121,5 +139,9 @@
       <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708"/>
     </symbol>
   </svg>
+  <script src="../dist/parseuri.min.js"></script>
+  <script src="assets/parseuri-v1.2.2-for-test.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/urijs@1.19.11/src/URI.min.js"></script>
+  <script src="assets/run.js"></script>
 </body>
 </html>

@@ -1,124 +1,148 @@
+const URIKeys = {
+  href: 'href',
+  origin: 'origin',
+  protocol: 'protocol',
+  authority: 'authority',
+  userinfo: 'userinfo',
+  username: 'username',
+  password: 'password',
+  host: 'host',
+  hostname: 'hostname',
+  subdomain: 'subdomain',
+  domain: 'domain',
+  tld: 'tld',
+  port: 'port',
+  resource: 'resource',
+  pathname: 'pathname',
+  directory: 'directory',
+  filename: 'filename',
+  suffix: 'suffix',
+  query: 'query',
+  fragment: 'fragment',
+  queryParams: 'queryParams',
+};
+
 const URIPartsMap = {
-  href: {
+  [URIKeys.href]: {
     desc: 'The full (trimmed) URI',
     parseUriV1: 'source',
-    uriJs: 'href',
-    urlStandard: 'href',
+    urlStandard: URIKeys.href,
+    uriJs: URIKeys.href,
   },
-  origin: {
+  [URIKeys.origin]: {
     desc: 'Combines protocol and authority',
     parseUriV1: null,
-    uriJs: 'origin',
-    urlStandard: 'origin', // excludes userinfo
+    urlStandard: URIKeys.origin, // excludes userinfo
+    uriJs: URIKeys.origin,
   },
-  protocol: {
+  [URIKeys.protocol]: {
     desc: 'Also called the scheme',
-    parseUriV1: 'protocol',
-    uriJs: 'protocol', // alias: `scheme`
-    urlStandard: 'protocol', // includes trailing ':'
+    parseUriV1: URIKeys.protocol,
+    urlStandard: URIKeys.protocol, // includes trailing ':'
+    uriJs: URIKeys.protocol, // alias: `scheme`
   },
-  authority: {
+  [URIKeys.authority]: {
     desc: 'Combines userinfo and host',
-    parseUriV1: 'authority',
-    uriJs: 'authority',
+    parseUriV1: URIKeys.authority,
     urlStandard: null,
+    uriJs: URIKeys.authority,
   },
-  userinfo: {
+  [URIKeys.userinfo]: {
     desc: 'Combines username and password. Deprecated by RFC3986.',
     parseUriV1: 'userInfo', // different casing
-    uriJs: 'userinfo',
     urlStandard: null,
+    uriJs: URIKeys.userinfo,
   },
-  username: {
+  [URIKeys.username]: {
     parseUriV1: 'user',
-    uriJs: 'username',
-    urlStandard: 'username',
+    urlStandard: URIKeys.username,
+    uriJs: URIKeys.username,
   },
-  password: {
-    parseUriV1: 'password',
-    uriJs: 'password',
-    urlStandard: 'password',
+  [URIKeys.password]: {
+    parseUriV1: URIKeys.password,
+    urlStandard: URIKeys.password,
+    uriJs: URIKeys.password,
   },
-  host: {
+  [URIKeys.host]: {
     desc: 'Combines hostname and port',
     parseUriV1: null,
-    uriJs: 'host',
-    urlStandard: 'host',
+    urlStandard: URIKeys.host,
+    uriJs: URIKeys.host,
   },
-  hostname: {
+  [URIKeys.hostname]: {
     desc: 'Where to send the request',
     parseUriV1: 'host',
-    uriJs: 'hostname',
-    urlStandard: 'hostname',
+    urlStandard: URIKeys.hostname,
+    uriJs: URIKeys.hostname,
   },
-  subdomain: {
+  [URIKeys.subdomain]: {
     parseUriV1: null,
-    uriJs: 'subdomain',
     urlStandard: null,
+    uriJs: URIKeys.subdomain,
   },
-  domain: {
+  [URIKeys.domain]: {
     desc: 'Includes tld',
     parseUriV1: null,
-    uriJs: 'domain',
     urlStandard: null,
+    uriJs: URIKeys.domain,
   },
-  tld: {
+  [URIKeys.tld]: {
     desc: 'Top-level domain (ex: com from example.com). Can include second-level domain (ex: co.uk) if a list is provided.',
     parseUriV1: null,
-    uriJs: 'tld',
     urlStandard: null,
+    uriJs: URIKeys.tld,
   },
-  port: {
-    parseUriV1: 'port',
-    uriJs: 'port',
-    urlStandard: 'port', // removes if [80, 443] and protocol is [http, https]
+  [URIKeys.port]: {
+    parseUriV1: URIKeys.port,
+    urlStandard: URIKeys.port, // removes if it's the default for http[s]/ws[s]/ftp
+    uriJs: URIKeys.port,
   },
-  resource: {
+  [URIKeys.resource]: {
     desc: 'Combines pathname, query, and fragment',
     parseUriV1: 'relative',
-    uriJs: 'resource',
     urlStandard: null,
+    uriJs: URIKeys.resource,
   },
-  pathname: {
+  [URIKeys.pathname]: {
     desc: 'Combines directory and filename',
     parseUriV1: 'path',
-    uriJs: 'pathname', // alias: `path`
-    urlStandard: 'pathname',
+    urlStandard: URIKeys.pathname,
+    uriJs: URIKeys.pathname, // alias: `path`
   },
-  directory: {
-    parseUriV1: 'directory',
-    uriJs: 'directory', // excludes trailing "/" unless directory is root
+  [URIKeys.directory]: {
+    parseUriV1: URIKeys.directory,
     urlStandard: null,
+    uriJs: URIKeys.directory, // excludes trailing '/' unless directory is root
   },
-  filename: {
+  [URIKeys.filename]: {
     desc: 'Includes suffix',
     parseUriV1: 'file',
-    uriJs: 'filename',
     urlStandard: null,
+    uriJs: URIKeys.filename,
   },
-  suffix: {
+  [URIKeys.suffix]: {
     desc: 'File extension (ex: jpg from photo.jpg)',
     parseUriV1: null,
-    uriJs: 'suffix',
     urlStandard: null,
+    uriJs: URIKeys.suffix,
   },
-  query: {
-    desc: 'Excludes the leading ?',
-    parseUriV1: 'query',
-    uriJs: 'query', // also: `search` (but then includes leading '?')
-    urlStandard: 'search', // includes leading '?'
+  [URIKeys.query]: {
+    desc: 'Excludes the leading "?"',
+    parseUriV1: URIKeys.query,
+    urlStandard: 'search', // includes leading '?' unless nothing after it
+    uriJs: URIKeys.query, // also: `search` (but then includes leading '?')
   },
-  fragment: {
-    desc: 'Excludes the leading #. This is used by the client and isn’t sent to the server.',
+  [URIKeys.fragment]: {
+    desc: 'Excludes the leading "#". This is used by the client and isn’t sent to the server.',
     parseUriV1: 'anchor',
-    uriJs: 'fragment', // also: `hash` (but then includes leading '#')
-    urlStandard: 'hash', // includes leading '#'
+    urlStandard: 'hash', // includes leading '#' unless nothing after it
+    uriJs: URIKeys.fragment, // also: `hash` (but then includes leading '#')
   },
-  queryParams: {
-    desc: 'Object to easily access URL-decoded query parameters',
+  [URIKeys.queryParams]: {
+    desc: 'Object for easily accessing URL-decoded query parameters',
     parseUriV1: 'queryKey',
-    uriJs: 'query(true)',
     urlStandard: 'searchParams',
+    uriJs: 'query(true)',
   },
 };
 
@@ -143,22 +167,42 @@ const colorClass = {
   different: 'different',
 };
 
+const els = {
+  uriInput: document.getElementById('uri-input'),
+  extendTlds: document.getElementById('extendTlds'),
+  friendlyMode: document.getElementById('friendlyMode'),
+  urlStandard: document.getElementById('urlStandard'),
+  uriJs: document.getElementById('uriJs'),
+  compareV1: document.getElementById('compareV1'),
+  tableBody: document.querySelector("#uri-table > tbody"),
+};
+
+const escFn = {
+  html: str => str.replace(/&/g, '&amp;').replace(/</g, '&lt;'),
+  attrValue: str => str.replace(/"/g, '&quot;'),
+  regexp: str => str.replace(/[\\\[\]{}()*+?.^$|]/g, '\\$&'),
+};
+
 function svgIconHtml(icon) {
   return `<svg class="svg-icon"><use xlink:href="#${icon}-icon"/></svg>`;
 }
 
 function getPartDesc(part) {
   const desc = URIPartsMap[part].desc;
-  return desc ? `<span class="part-desc"><abbr title="${desc}">&nbsp;${svgIconHtml('info')}</abbr></span>` : '';
+  return desc ?
+    `<span class="part-desc"><abbr title="${escFn.attrValue(desc)}">
+      &nbsp;${svgIconHtml('info')}</abbr></span>` :
+    '';
 }
 
-function getQueryKeyValue(value) {
+function getQueryParamKey(key) {
+  // wrap in quotes if non-identifier chars in key
+  return /^[$_\p{L}][$_\p{L}\d]*$/u.test(key) ? key : `'${key}'`;
+}
+
+function getQueryParamValue(value) {
   // URI.js uses null for keys not followed by '='
   return value === null ? 'null' : `'${value}'`;
-}
-
-function getQueryKeyKey(key) {
-  return /^[$_\p{L}][$_\p{L}\d]*$/u.test(key) ? key : `'${key}'`;
 }
 
 // convert `URLSearchParams` (potential for multiple keys with same name) or URI `Object` to HTML string
@@ -166,7 +210,7 @@ function urlSearchParamsToHtml(searchParams) {
   let str = '<span class="query-params">';
   if (searchParams instanceof URLSearchParams) {
     str += '<span class="object-type">URLSearchParams</span>&lt;';
-  // parseUri V1 and URI.js use a simple object
+  // parseUri v1 and URI.js use a simple object
   } else {
     str += '{';
     searchParams = Object.entries(searchParams);
@@ -174,11 +218,11 @@ function urlSearchParamsToHtml(searchParams) {
   for (let [key, value] of searchParams) {
     // URI.js uses arrays for values when multiple values are provided for the same key
     if (Array.isArray(value)) {
-      value = `[${value.map(getQueryKeyValue).join(', ')}]`;
+      value = `[${value.map(getQueryParamValue).join(', ')}]`;
     } else {
-      value = getQueryKeyValue(value);
+      value = getQueryParamValue(value);
     }
-    str += htmlEncode(`${getQueryKeyKey(key)}:${value}, `);
+    str += htmlEncode(`${getQueryParamKey(key)}:${value}, `);
   }
   if (str.slice(-2) === ', ') {
     str = str.slice(0, -2);
@@ -189,7 +233,7 @@ function urlSearchParamsToHtml(searchParams) {
 
 function htmlEncode(value) {
   if (typeof value === 'string') {
-    return value.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+    return escFn.html(value);
   }
   return value;
 }
@@ -205,7 +249,7 @@ function objMap(obj, fn) {
 }
 
 function prepareParseUriObj(str, mode = 'default') {
-  const extendTlds = document.getElementById('extendTlds').checked;
+  const extendTlds = els.extendTlds.checked;
   parseUri.setTlds(extendTlds ? SecondLevelDomains.list : {});
   const obj = parseUri(str, mode);
   return {
@@ -262,7 +306,7 @@ function prepareUriJsObj(str) {
   const uri = URI(str);
   for (const [key, value] of Object.entries(URIPartsMap)) {
     // special handling because we have to call the key's function with an argument (true)
-    if (key === 'queryParams') {
+    if (key === URIKeys.queryParams) {
       const queryObj = uri.query(true);
       result.rawQueryParams = queryObj;
       result[key] = urlSearchParamsToHtml(queryObj);
@@ -288,18 +332,18 @@ function colorForKey(a, b, normalizedA) {
 }
 
 function colorForUrlStandardKeyByKey(key, a, b, normalizedA) {
-  if (key === 'protocol') {
+  if (key === URIKeys.protocol) {
     if (`${normalizedA}:` === b) return colorClass.similar;
-  } else if (key === 'query') {
+  } else if (key === URIKeys.query) {
     if (`?${normalizedA}` === b) return colorClass.similar;
-  } else if (key === 'fragment') {
+  } else if (key === URIKeys.fragment) {
     if (`#${normalizedA}` === b) return colorClass.similar;
   }
   return colorForKey(a, b, normalizedA);
 }
 
 function colorForUriJsKeyByKey(key, a, b, normalizedA) {
-  if (key === 'directory') {
+  if (key === URIKeys.directory) {
     if (normalizedA === `${b}/`) return colorClass.similar;
   }
   return colorForKey(a, b, normalizedA);
@@ -344,7 +388,7 @@ function colorForQueryParams(aQueryObj, bQueryObj) {
 
 function getKeyColor(key, a, b, normalizedA, options = {lib: null}) {
   if (
-    key === 'queryParams' &&
+    key === URIKeys.queryParams &&
     b[key] !== outputMsg.error
   ) {
     return colorForQueryParams(a.rawQueryParams, b.rawQueryParams);
@@ -360,7 +404,7 @@ function getKeyColor(key, a, b, normalizedA, options = {lib: null}) {
 }
 
 function getFriendlyModeBadgeColor(key, a, b) {
-  if (key === 'queryParams') {
+  if (key === URIKeys.queryParams) {
     return colorForQueryParams(a.rawQueryParams, b.rawQueryParams);
   }
   return colorClass.different;
@@ -394,7 +438,7 @@ function buildTableStr(key, {
   const parseUriV1Key = URIPartsMap[key].parseUriV1;
   const urlStandardKey = URIPartsMap[key].urlStandard;
   const uriJsKey = URIPartsMap[key].uriJs;
-  const firstKey = 'href';
+  const firstKey = URIKeys.href;
   // can't use rowspan="0" since as of 2024-03 its not supported in mobile Safari
   const unusedObjFullColumnCell = `<td class="neutral" rowspan="${Object.keys(URIPartsMap).length}"></td>`;
   return `
@@ -447,11 +491,8 @@ function buildTableStr(key, {
       ${/* URL */''}
       ${urlStandardObj ?
         `<td class="${getKeyColor(key, parseUriObj, urlStandardObj, parseUriObjNormalizedByUrlStandard, {lib: libs.urlStandard})}">
-          ${/* hack for origin 'null' to make it clearer that parseUri's handling is intentional */
-            key === 'origin' && urlStandardObj[key] === 'null' ?
-            `<abbr class="info-icon" title="parseUri doesn’t normalize results; URL sets origin to the string 'null' when protocol is not http[s]/ws[s]/ftp/file/blob">${svgIconHtml('info')}</abbr>
-              ${printUriPart(urlStandardObj[key])}` :
-            printUriPart(urlStandardObj[key])}
+          ${urlStandardDiffInfo(key, urlStandardObj[key], parseUriObj)}
+          ${printUriPart(urlStandardObj[key])}
         </td>` :
         (key === firstKey ? unusedObjFullColumnCell : '')
       }
@@ -466,6 +507,43 @@ function buildTableStr(key, {
   `;
 }
 
+function urlStandardDiffInfo(key, value, parseUriObj) {
+  const hasValue = value && value !== outputMsg.error;
+  const protocol = parseUriObj.protocol.toLowerCase();
+  let info;
+
+  if (key === URIKeys.origin && value === 'null') {
+    // clarify that parseUri's handling is intentional
+    info = 'parseUri doesn’t normalize results; URL sets origin to the string "null" when protocol isn’t http[s]/ws[s]/ftp/file/blob';
+  } else if (key === URIKeys.protocol && hasValue) {
+    info = 'Includes trailing ":"';
+  } else if (
+    key === URIKeys.port &&
+    value === '' &&
+    parseUriObj.port !== '' &&
+    ['http', 'https', 'ws', 'wss', 'ftp'].includes(protocol)
+  ) {
+    info = 'URL’s normalization removes port if protocol is http[s]/ws[s]/ftp and port is the protocol’s default';
+  } else if (
+    key === URIKeys.pathname &&
+    // `URL` treats a single-letter protocol as a drive (part of the path) and sets protocol as file
+    !/^(?:https?|wss?|ftp|file|[a-z])$/.test(protocol) &&
+    // skip 'proto:' without a following '//'
+    RegExp(`^${escFn.regexp(protocol)}://`).test(parseUriObj.origin)
+  ) {
+    info = 'URL doesn’t support URNs well and just puts everything after the protocol (up to "?" or "#") in pathname';
+  } else if (key === URIKeys.query && hasValue) {
+    info = 'Includes leading "?" unless nothing is after it';
+  } else if (key === URIKeys.fragment && hasValue) {
+    info = 'Includes leading "#" unless nothing is after it';
+  }
+
+  if (info) {
+    return `<abbr class="info-icon" title="${escFn.attrValue(info)}">${svgIconHtml('info')}</abbr>`;
+  }
+  return '';
+}
+
 function comparePreparedUriObjs(a, b) {
   for (const key of Object.keys(URIPartsMap)) {
     if (a[key] !== b[key]) {
@@ -476,11 +554,11 @@ function comparePreparedUriObjs(a, b) {
 }
 
 function run() {
-  const uri = document.getElementById('uri-input').value;
-  const isFriendlyModeOn = document.getElementById('friendlyMode').checked;
-  const isUrlStandardOn = document.getElementById('urlStandard').checked;
-  const isUriJsOn = document.getElementById('uriJs').checked;
-  const isCompareV1On = document.getElementById('compareV1').checked;
+  const uri = els.uriInput.value;
+  const isFriendlyModeOn = els.friendlyMode.checked;
+  const isUrlStandardOn = els.urlStandard.checked;
+  const isUriJsOn = els.uriJs.checked;
+  const isCompareV1On = els.compareV1.checked;
 
   let parseUriV1Obj, parseUriFriendlyModeObj, parseUriV1FriendlyModeObj,
     isParseUriDefaultFriendlyEqual, urlStandardObj, uriJsObj, normalizedByUrlStandard,
@@ -526,11 +604,34 @@ function run() {
     });
   }
 
-  const table = document.querySelector("#uri-table > tbody");
-  table.innerHTML = tableStr;
+  els.tableBody.innerHTML = tableStr;
 }
 
-function setInput(str) {
+function init() {
+  const q = new URL(location).searchParams;
+
+  const options = [
+    'friendlyMode',
+    'urlStandard',
+    'uriJs',
+    'compareV1',
+    'extendTlds',
+  ];
+  options.forEach(option => {
+    if (q.get(option) === 'true') {
+      document.getElementById(option).checked = true;
+    }
+  });
+
+  const uri = q.get('uri') ?? '';
+  els.uriInput.value = uri;
+  // don't expand the comparison table if `uri` is blank
+  if (uri) {
+    run();
+  }
+}
+
+function setUri(str) {
   const url = new URL(location);
   if (str) {
     url.searchParams.set('uri', str);
@@ -552,26 +653,15 @@ function setOption(id, checked) {
   run();
 }
 
-onload = () => {
-  const q = new URL(location).searchParams;
+addEventListener('DOMContentLoaded', e => {
+  init();
 
-  const options = [
-    'friendlyMode',
-    'urlStandard',
-    'uriJs',
-    'compareV1',
-    'extendTlds',
-  ];
-  options.forEach(option => {
-    if (q.get(option) === 'true') {
-      document.getElementById(option).checked = true;
-    }
+  document.querySelectorAll('#examples a').forEach(el => {
+    el.addEventListener('click', e => {
+      e.preventDefault();
+      const uri = e.target.textContent;
+      els.uriInput.value = uri;
+      setUri(uri);
+    });
   });
-
-  const uri = q.get('uri') ?? '';
-  document.getElementById('uri-input').value = uri;
-  // don't expand the comparison table if `uri` is blank
-  if (uri) {
-    run();
-  }
-};
+});

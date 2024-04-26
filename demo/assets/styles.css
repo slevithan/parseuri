@@ -81,6 +81,8 @@ p, summary {
 
 summary {
 	cursor: pointer;
+  font-weight: bold;
+  font-size: 0.8rem;
 }
 
 abbr {
@@ -115,6 +117,12 @@ abbr {
   white-space: pre;
   font-family: Consolas, 'Courier New', Courier, monospace;
   font-size: 0.7rem;
+}
+
+#examples ul {
+  margin-top: 0;
+  font-size: 0.7rem;
+  column-width: 20rem;
 }
 
 .table-container {
