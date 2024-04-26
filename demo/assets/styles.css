@@ -80,7 +80,7 @@ p, summary {
 }
 
 summary {
-	cursor: pointer;
+  cursor: pointer;
   font-weight: bold;
   font-size: 0.8rem;
 }
