@@ -44,7 +44,7 @@ describe('queryParams', () => {
     expect(queryParams.size).toBe(0);
   });
 
-  it('should allow duplicate keys', () => {
+  it('should allow accessing values of duplicate keys', () => {
     expect(parseUri('?q=a&q=bc&q=d').queryParams.getAll('q')).toEqual(['a', 'bc', 'd']);
   });
 
@@ -56,7 +56,27 @@ describe('queryParams', () => {
     expect(parseUri('?q').queryParams.get('q')).toBe('');
   });
 
+  it('should return null for get if key not present', () => {
+    expect(parseUri('?q').queryParams.get('z')).toBeNull();
+  });
+
+  it('should return empty array for getAll if key not present', () => {
+    expect(parseUri('?q').queryParams.getAll('z')).toEqual([]);
+  });
+
   it('should allow empty key names', () => {
-    expect(parseUri('?=a&=').queryParams.getAll('')).toEqual(['a', '']);
+    expect(parseUri('?=x&=').queryParams.getAll('')).toEqual(['x', '']);
+  });
+
+  it('should allow missing keys (blank between &)', () => {
+    const {queryParams} = parseUri('?&q=&&');
+    expect(queryParams.getAll('q')).toEqual(['']);
+    expect(queryParams.size).toBe(1);
+  });
+
+  it('should allow ? in query', () => {
+    expect(parseUri('??q=x').queryParams.get('?q')).toBe('x');
+    expect(parseUri('?q?=x').queryParams.get('q?')).toBe('x');
+    expect(parseUri('?q=?').queryParams.get('q')).toBe('?');
   });
 });
