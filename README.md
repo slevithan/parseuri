@@ -18,7 +18,7 @@ Conversely, `parseUri` is single-purpose and doesn’t apply normalization. You 
 
 ## Results / URI parts
 
-Returns an object with 20 URI part properties plus `queryParams`, a [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) object that includes `.get(key)`, `.getAll(key)`, etc.
+Returns an object with 20 URI parts as properties plus `queryParams`, a [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) object that includes methods `get(key)`, `getAll(key)`, etc.
 
 Here’s an example of what each part contains:
 
@@ -110,12 +110,12 @@ uri.domain === '';
 uri.query === 'q=x';
 
 // URN
-uri = parseUri('mailto:first@example.com,second@example.com?subject=Subscribe&body=Sign%20me%20up!');
+uri = parseUri('mailto:one@example.com,two@example.com?subject=Hey&body=Sign%20me%20up!');
 
 uri.protocol === 'mailto';
 uri.hostname === '';
-uri.pathname === 'first@example.com,second@example.com';
-uri.queryParams.get('subject') === 'Subscribe';
+uri.pathname === 'one@example.com,two@example.com';
+uri.queryParams.get('subject') === 'Hey';
 uri.queryParams.get('body') === 'Sign me up!';
 
 /* Also supports e.g.:
