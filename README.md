@@ -9,7 +9,7 @@
 * `parseUri` gives you many additional properties (`authority`, `userinfo`, `subdomain`, `domain`, `tld`, `resource`, `directory`, `filename`, `suffix`) that aren’t available from `URL`.
 * `URL` throws e.g. if not given a protocol, and in many other cases of valid (but not supported) and invalid URIs. `parseUri` makes a best case effort even with partial or invalid URIs and is extremely good with edge cases.
 * `URL`’s rules don’t allow correctly handling many non-web protocols. For example, `URL` doesn’t throw on any of `'git://localhost:1234'`, `'ssh://myid@192.168.1.101'`, or `'t2ab:///path/entry'`, but it also doesn’t get their details correct since it treats everything after `<non-web-protocol>:` up to `?` or `#` as part of the `pathname`.
-* `parseUri` includes a “friendly” parsing mode (in addition to its default mode) that handles human-friendly URLs like `'example.com/index.html'` as expected.
+* `parseUri` includes a “friendly” parsing mode (in addition to its default mode) that handles human-friendly URLs like `'example.com/file.html'` as expected.
 * `parseUri` supports providing a list of second-level domains that should be treated as part of the top-level domain (ex: `co.uk`).
 
 Conversely, `parseUri` is single-purpose and doesn’t apply normalization. You can of course use a URI normalizer separately, or build one on top of `parseUri`.
@@ -80,18 +80,18 @@ uri.filename === 'file.html';
 uri.query === 'a=1';
 
 // friendly mode allows starting with an authority
-uri = parseUri('example.com/index.html', 'friendly');
+uri = parseUri('example.com/file.html', 'friendly');
 
 uri.hostname === 'example.com';
 uri.directory === '/';
-uri.filename === 'index.html';
+uri.filename === 'file.html';
 
 // compare the friendly mode example above with default mode
-uri = parseUri('example.com/index.html');
+uri = parseUri('example.com/file.html');
 
 uri.hostname === '';
 uri.directory === 'example.com/';
-uri.filename === 'index.html';
+uri.filename === 'file.html';
 
 // IPv4 address
 uri = parseUri('ssh://myid@192.168.1.101');

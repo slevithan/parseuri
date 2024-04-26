@@ -54,11 +54,10 @@ input[type='checkbox'] {
 
 a {
   color: #666;
-  text-decoration: none;
 }
 
 a:hover {
-  text-decoration: underline;
+  color: #888;
 }
 
 code {
