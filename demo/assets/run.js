@@ -129,13 +129,13 @@ const URIPartsMap = {
   [URIKeys.query]: {
     desc: 'Excludes the leading "?"',
     parseUriV1: URIKeys.query,
-    urlStandard: 'search', // includes leading '?' unless nothing after it
+    urlStandard: 'search', // includes leading '?' unless nothing is after it
     uriJs: URIKeys.query, // also: `search` (but then includes leading '?')
   },
   [URIKeys.fragment]: {
     desc: 'Excludes the leading "#". This is used by the client and isn’t sent to the server.',
     parseUriV1: 'anchor',
-    urlStandard: 'hash', // includes leading '#' unless nothing after it
+    urlStandard: 'hash', // includes leading '#' unless nothing is after it
     uriJs: URIKeys.fragment, // also: `hash` (but then includes leading '#')
   },
   [URIKeys.queryParams]: {
@@ -533,9 +533,9 @@ function urlStandardDiffInfo(key, value, parseUriObj) {
   ) {
     info = 'URL doesn’t support URNs well and just puts everything after the protocol (up to "?" or "#") in pathname';
   } else if (key === URIKeys.query && hasValue) {
-    info = 'Includes leading "?" unless nothing is after it';
+    info = 'Includes leading "?"';
   } else if (key === URIKeys.fragment && hasValue) {
-    info = 'Includes leading "#" unless nothing is after it';
+    info = 'Includes leading "#"';
   }
 
   if (info) {
