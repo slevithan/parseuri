@@ -48,7 +48,7 @@ const URIPartsMap = {
     uriJs: URIKeys.authority,
   },
   [URIKeys.userinfo]: {
-    desc: 'Combines username and password. Deprecated by RFC3986.',
+    desc: 'Combines username and password. Deprecated by RFC 3986.',
     parseUriV1: 'userInfo', // different casing
     urlStandard: null,
     uriJs: URIKeys.userinfo,
@@ -531,7 +531,7 @@ function urlStandardDiffInfo(key, value, parseUriObj) {
     // skip 'proto:' without a following '//'
     RegExp(`^${escFn.regexp(protocol)}://`).test(parseUriObj.origin)
   ) {
-    info = 'URL doesn’t support URNs well and just puts everything after the protocol (up to "?" or "#") in pathname';
+    info = 'URL’s rules don’t correctly handle many non-web protocols; it puts everything after protocol up to "?" or "#" in pathname';
   } else if (key === URIKeys.query && hasValue) {
     info = 'Includes leading "?"';
   } else if (key === URIKeys.fragment && hasValue) {
