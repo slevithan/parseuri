@@ -54,69 +54,65 @@ Here’s an example of what each part contains:
 ## Usage examples
 
 ```js
-let uri = parseUri('https://a.b.example.com:80/@user/a/my.img.jpg?q=x&q=#start');
-
-uri.protocol === 'https';
-uri.host === 'a.b.example.com:80';
-uri.hostname === 'a.b.example.com';
-uri.subdomain === 'a.b';
-uri.domain === 'example.com';
-uri.port === '80';
-uri.resource === '/@user/a/my.img.jpg?q=x&q=#start';
-uri.pathname === '/@user/a/my.img.jpg';
-uri.directory === '/@user/a/';
-uri.filename === 'my.img.jpg';
-uri.suffix === 'jpg';
-uri.query === 'q=x&q=';
-uri.fragment === 'start';
-uri.queryParams.get('q') === 'x';
-uri.queryParams.getAll('q'); // → ['x', '']
+let uri = parseUri('https://a.b.example.com:80/@user/a/my.img.jpg?q=x&q=#hash');
+uri.protocol // → 'https'
+uri.host // → 'a.b.example.com:80'
+uri.hostname // → 'a.b.example.com'
+uri.subdomain // → 'a.b'
+uri.domain // → 'example.com'
+uri.port // → '80'
+uri.resource // → '/@user/a/my.img.jpg?q=x&q=#hash'
+uri.pathname // → '/@user/a/my.img.jpg'
+uri.directory // → '/@user/a/'
+uri.filename // → 'my.img.jpg'
+uri.suffix // → 'jpg'
+uri.query // → 'q=x&q='
+uri.fragment // → 'hash'
+uri.queryParams.get('q') // → 'x'
+uri.queryParams.getAll('q') // → ['x', '']
 // also available: href, origin, authority, userinfo, username, password, tld
 
-uri = parseUri('./file.html?a=1');
-
-uri.directory === './';
-uri.filename === 'file.html';
-uri.query === 'a=1';
+// relative path (not starting from root /)
+uri = parseUri('dir/file.html?q=x');
+uri.hostname // → ''
+uri.directory // → 'dir/'
+uri.filename // → 'file.html'
+uri.query // → 'q=x'
 
 // friendly mode allows starting with an authority
 uri = parseUri('example.com/file.html', 'friendly');
-
-uri.hostname === 'example.com';
-uri.directory === '/';
-uri.filename === 'file.html';
-
-// compare the friendly mode example above with default mode
-uri = parseUri('example.com/file.html');
-
-uri.hostname === '';
-uri.directory === 'example.com/';
-uri.filename === 'file.html';
+uri.hostname // → 'example.com'
+uri.directory // → '/'
+uri.filename // → 'file.html'
 
 // IPv4 address
 uri = parseUri('ssh://myid@192.168.1.101');
-
-uri.protocol === 'ssh';
-uri.username ==== 'myid';
-uri.hostname === '192.168.1.101';
-uri.domain === '';
+uri.protocol // → 'ssh'
+uri.username // → 'myid'
+uri.hostname // → '192.168.1.101'
+uri.domain // → ''
 
 // IPv6 address
 uri = parseUri('https://[2001:db8:85a3::7334]:80?q=x');
+uri.hostname // → '[2001:db8:85a3::7334]'
+uri.port // → '80'
+uri.domain // → ''
+uri.query // → 'q=x'
 
-uri.hostname === '[2001:db8:85a3::7334]';
-uri.port === '80';
-uri.domain === '';
-uri.query === 'q=x';
+// mailto
+uri = parseUri('mailto:first@my.com,second@my.com?subject=Hey&body=Sign%20me%20up!');
+uri.protocol // → 'mailto'
+uri.username // → ''
+uri.hostname // → ''
+uri.pathname // → 'first@my.com,second@my.com'
+uri.queryParams.get('subject') // → 'Hey'
+uri.queryParams.get('body') // → 'Sign me up!'
 
-// URN
-uri = parseUri('mailto:one@example.com,two@example.com?subject=Hey&body=Sign%20me%20up!');
-
-uri.protocol === 'mailto';
-uri.hostname === '';
-uri.pathname === 'one@example.com,two@example.com';
-uri.queryParams.get('subject') === 'Hey';
-uri.queryParams.get('body') === 'Sign me up!';
+// mailto in friendly mode
+uri = parseUri('mailto:me@my.com?subject=Hey', 'friendly');
+uri.username // → 'me'
+uri.hostname // → 'my.com'
+uri.queryParams.get('subject') // → 'Hey'
 
 /* Also supports e.g.:
 - https://[2001:db8:85a3::7334%en1]/ipv6-with-zone-identifier
