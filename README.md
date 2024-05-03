@@ -70,6 +70,8 @@ uri.query // → 'q=x&q='
 uri.fragment // → 'hash'
 uri.queryParams.get('q') // → 'x'
 uri.queryParams.getAll('q') // → ['x', '']
+uri.queryParams.get('not-present') // → null
+uri.queryParams.getAll('not-present') // → []
 // also available: href, origin, authority, userinfo, username, password, tld
 
 // relative path (not starting from root /)
@@ -105,14 +107,15 @@ uri.protocol // → 'mailto'
 uri.username // → ''
 uri.hostname // → ''
 uri.pathname // → 'first@my.com,second@my.com'
-uri.queryParams.get('subject') // → 'Hey'
+uri.query // → 'subject=Hey&body=Sign%20me%20up!'
 uri.queryParams.get('body') // → 'Sign me up!'
 
 // mailto in friendly mode
 uri = parseUri('mailto:me@my.com?subject=Hey', 'friendly');
+uri.protocol // → 'mailto'
 uri.username // → 'me'
 uri.hostname // → 'my.com'
-uri.queryParams.get('subject') // → 'Hey'
+uri.pathname // → ''
 
 /* Also supports e.g.:
 - https://[2001:db8:85a3::7334%en1]/ipv6-with-zone-identifier

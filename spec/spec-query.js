@@ -74,7 +74,7 @@ describe('queryParams', () => {
     expect(queryParams.size).toBe(1);
   });
 
-  it('should allow ? in query keys and values', () => {
+  it('should allow ? in key names and values', () => {
     expect(parseUri('??q=x').queryParams.get('?q')).toBe('x');
     expect(parseUri('?q?=x').queryParams.get('q?')).toBe('x');
     expect(parseUri('?q=?').queryParams.get('q')).toBe('?');
