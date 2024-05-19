@@ -54,14 +54,13 @@ list of second-level domains that should be treated as part of the top-level dom
 function parseUri(uri, mode = 'default') {
   uri = uri.trim();
   const {groups} = cache.parser[mode].exec(uri);
-  const result = {
+  const {hasAuth, ...result} = {
     href: uri,
     ...groups,
     // URNs: if we have an authority (contained in `hasAuth`), keep dir/file, else remove because
     // they don't apply. `hasAuth` indicates participation in the match, but it could be empty
     ...(groups.protocol && groups.hasAuth == null ? blankUrnProps : null),
   };
-  delete result.hasAuth;
   // replace `undefined` for non-participating capturing groups
   Object.keys(result).forEach(key => result[key] ??= '');
   return Object.assign(result, {
