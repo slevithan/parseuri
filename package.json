@@ -2,7 +2,7 @@
   "name": "parseuri",
   "version": "3.0.0",
   "description": "Mighty but tiny URI parser",
-  "homepage": "https://github.com/slevithan/parseuri",
+  "homepage": "https://slevithan.github.io/parseuri/demo/",
   "main": "src/index.js",
   "type": "module",
   "scripts": {
