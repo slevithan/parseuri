@@ -15,7 +15,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/slevithan/parseuri.git"
+    "url": "git+https://github.com/slevithan/parseuri.git"
   },
   "keywords": [
     "uri",
