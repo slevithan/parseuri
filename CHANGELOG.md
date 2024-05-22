@@ -1,3 +1,11 @@
+# v3.0.1
+
+First version posted to npm. Thanks @galkn for package name `parseuri`.
+
+**Improvements**
+
+- Demo and readme updates.
+
 # v3.0.0
 
 This is a minor update, but includes a breaking change for a minor feature.
@@ -44,5 +52,6 @@ This is a major, breaking change that comes 17 years after v1.2.2. It updates `p
 
 **Bug Fixes**
 
-- Fixed an issue where an `@` sign in the resource led to incorrect parsing.
+- Fixed an issue where `@` in the resource led to incorrect parsing.
+- Fixed an ReDoS vulnerability with extremely long URIs that use `@` in the resource.
 - Fixed numerous additional edge cases with atypical/invalid URIs.

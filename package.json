@@ -1,6 +1,6 @@
 {
   "name": "parseuri",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Mighty but tiny URI parser",
   "homepage": "https://slevithan.github.io/parseuri/demo/",
   "main": "src/index.js",
@@ -23,7 +23,7 @@
     "urn"
   ],
   "devDependencies": {
-    "esbuild": "^0.20.2",
+    "esbuild": "^0.21.3",
     "jasmine": "^5.1.0"
   }
 }
