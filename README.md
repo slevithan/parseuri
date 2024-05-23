@@ -57,7 +57,7 @@ Here’s an example of what each part contains:
 - It precludes friendly mode from properly handling relative paths (that don’t start from root `'/'`) such as `'dir/file.html'`.
 - Since the web protocols `http`, `https`, `ws`, `wss`, and `ftp` don’t require `'//'`, this also means that friendly mode extends this behavior to non-web protocols.
 
-## Usage examples
+## Examples
 
 ```js
 let uri = parseUri('https://a.b.example.com:80/@user/a/my.img.jpg?q=x&q=#hash');
@@ -133,3 +133,27 @@ uri.pathname // → ''
 ```
 
 Use `parseUri`’s [demo page](https://slevithan.github.io/parseuri/demo/) to easily test and compare results.
+
+## Installation and usage
+
+npm:
+
+```bash
+npm install parseuri
+```
+
+Node.js:
+
+```js
+import { parseUri, setTlds } from 'parseuri';
+```
+
+Browsers:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/parseuri/dist/parseuri.min.js"></script>
+<script>
+  const uri = parseUri('https://example.com/');
+  // If needed, use `parseUri.setTlds`
+</script>
+```
