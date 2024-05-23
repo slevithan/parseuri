@@ -4,7 +4,7 @@
 
 ## Breaking changes in parseUri 2
 
-Version 2 was a major, breaking change that came 17 years after v1.2.2. It updated `parseUri`’s API, added new features, included bug/security fixes, added tests, used modern JavaScript, became a truly universal URI parser, and remained tiny. See details in the [release notes](https://github.com/slevithan/parseuri/releases/tag/v2.0.0).
+Version 2 was a major, breaking change that probably requires updating URI part names in your code. See details in the [release notes](https://github.com/slevithan/parseuri/releases/tag/v2.0.0) and compare results on the [demo page](https://slevithan.github.io/parseuri/demo/?compareV1=true&friendlyMode=true).
 
 ## Compared to the built-in `URL` constructor
 
