@@ -1,6 +1,6 @@
 beforeEach(() => {
   jasmine.addMatchers({
-    // only compare given keys
+    // only compares given keys
     toMatchUriKeys: () => {
       return {
         compare: (actual, expected) => {
@@ -13,7 +13,7 @@ beforeEach(() => {
         },
       };
     },
-    // only compare given keys
+    // only compares given keys
     toMatchUriKeysInAllModes: () => {
       return {
         compare: (actual, expected) => {

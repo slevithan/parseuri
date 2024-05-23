@@ -3,7 +3,7 @@
   "version": "3.0.1",
   "description": "Mighty but tiny URI parser",
   "homepage": "https://slevithan.github.io/parseuri/demo/",
-  "main": "src/index.js",
+  "exports": "./src/index.js",
   "type": "module",
   "scripts": {
     "build": "esbuild src/index.js --bundle --minify --outfile=dist/parseuri.min.js --global-name=parseUri --footer:js=parseUri.parseUri.setTlds=parseUri.setTlds;globalThis.parseUri=parseUri.parseUri;",

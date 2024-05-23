@@ -20,48 +20,48 @@ Also supports IPv4/IPv6 addresses, URNs, and many edge cases not shown here. Sup
 list of second-level domains that should be treated as part of the top-level domain (ex: co.uk) */
 
 /**
- * @typedef {Object} ParseUriObject
- * @prop {string} href
- * @prop {string} origin
- * @prop {string} protocol
- * @prop {string} authority
- * @prop {string} userinfo
- * @prop {string} username
- * @prop {string} password
- * @prop {string} host
- * @prop {string} hostname
- * @prop {string} subdomain
- * @prop {string} domain
- * @prop {string} tld
- * @prop {string} port
- * @prop {string} resource
- * @prop {string} pathname
- * @prop {string} directory
- * @prop {string} filename
- * @prop {string} suffix
- * @prop {string} query
- * @prop {string} fragment
- * @prop {URLSearchParams} queryParams
- */
+@typedef {Object} ParseUriObject
+@prop {string} href
+@prop {string} origin
+@prop {string} protocol
+@prop {string} authority
+@prop {string} userinfo
+@prop {string} username
+@prop {string} password
+@prop {string} host
+@prop {string} hostname
+@prop {string} subdomain
+@prop {string} domain
+@prop {string} tld
+@prop {string} port
+@prop {string} resource
+@prop {string} pathname
+@prop {string} directory
+@prop {string} filename
+@prop {string} suffix
+@prop {string} query
+@prop {string} fragment
+@prop {URLSearchParams} queryParams
+*/
 
 /**
- * Splits any URI into its parts.
- * @param {string} uri
- * @param {'default' | 'friendly'} [mode] Parsing mode. Default follows official URI rules.
- * Friendly handles human-friendly URLs like `'example.com/index.html'` as expected.
- * @returns {ParseUriObject} Object with URI parts, plus `queryParams`.
- */
+Splits any URI into its parts.
+@param {string} uri
+@param {'default' | 'friendly'} [mode] Parsing mode. Default follows official URI rules.
+Friendly handles human-friendly URLs like `'example.com/index.html'` as expected.
+@returns {ParseUriObject} Object with URI parts, plus `queryParams`.
+*/
 function parseUri(uri, mode = 'default') {
   uri = uri.trim();
   const {groups} = cache.parser[mode].exec(uri);
   const {hasAuth, ...result} = {
     href: uri,
     ...groups,
-    // URNs: if we have an authority (contained in `hasAuth`), keep dir/file, else remove because
+    // URNs: If we have an authority (contained in `hasAuth`), keep dir/file, else remove because
     // they don't apply. `hasAuth` indicates participation in the match, but it could be empty
     ...(groups.protocol && groups.hasAuth == null ? blankUrnProps : null),
   };
-  // replace `undefined` for non-participating capturing groups
+  // Replace `undefined` for non-participating capturing groups
   Object.keys(result).forEach(key => result[key] ??= '');
   return Object.assign(result, {
     ...(cache.tlds?.exec(result.hostname)?.groups),
@@ -76,14 +76,14 @@ const blankUrnProps = {
 };
 
 function getParser(mode) {
-  // forward and backslashes have lost all meaning for web protocols (http, https, ws, wss, ftp)
-  // and protocol-relative URLs. also handle multiple colons in protocol delimiter for security
+  // Forward and backslashes have lost all meaning for web protocols (http, https, ws, wss, ftp)
+  // and protocol-relative URLs. Also handle multiple colons in protocol delimiter for security
   const authorityDelimiter = String.raw`(?:(?:(?<=^(?:https?|wss?|ftp):):*|^:+)[\\/]*|^[\\/]{2,}|//)`;
   const authority = {
     default: {start: `(?<hasAuth>${authorityDelimiter}`, end: ')?'},
     friendly: {start: `(?<hasAuth>${authorityDelimiter}?)`, end: ''},
   };
-  // see `free-spacing-regex.md`
+  // See file: free-spacing-regex.md
   return RegExp(String.raw`^(?<origin>(?:(?<protocol>[a-z][^\s:@\\/?#.]*):)?${authority[mode].start}(?<authority>(?:(?<userinfo>(?<username>[^:@\\/?#]*)(?::(?<password>[^\\/?#]*))?)?@)?(?<host>(?<hostname>\d{1,3}(?:\.\d{1,3}){3}(?=[:\\/?#]|$)|\[[a-f\d]{0,4}(?::[a-f\d]{0,4}){2,7}(?:%[^\]]*)?\]|(?<subdomain>[^:\\/?#]*?)\.??(?<domain>(?:[^.:\\/?#]*\.)?(?<tld>[^.:\\/?#]*))(?=[:\\/?#]|$))?(?::(?<port>[^:\\/?#]*))?))${authority[mode].end})(?<resource>(?<pathname>(?<directory>(?:[^\\/?#]*[\\/])*)(?<filename>(?:[^.?#]+|\.(?![^.?#]+(?:[?#]|$)))*(?:\.(?<suffix>[^.?#]+))?))(?:\?(?<query>[^#]*))?(?:\#(?<fragment>.*))?)`, 'i');
 }
 
@@ -95,14 +95,14 @@ const cache = {
 };
 
 /**
- * Set second-level domains recognized as part of the TLD (ex: co.uk).
- * @example
- * setTlds({
- *   au: 'com edu gov id net org',
- *   uk: 'co gov me net org sch',
- * });
- * @param {Object} obj Object with TLDs as keys and their SLDs as space-separated strings.
- */
+Set second-level domains recognized as part of the TLD (ex: co.uk).
+@param {Object} obj Object with TLDs as keys and their SLDs as space-separated strings.
+@example
+setTlds({
+  au: 'com edu gov id net org',
+  uk: 'co gov me net org sch',
+});
+*/
 function setTlds(obj) {
   const entries = Object.entries(obj);
   let parser;
@@ -118,4 +118,4 @@ function setTlds(obj) {
 // > <script src="https://cdn.jsdelivr.net/npm/urijs@1.19.11/src/SecondLevelDomains.js"></script>
 // > <script>parseUri.setTlds(SecondLevelDomains.list)</script>
 
-export {parseUri, setTlds};
+export { parseUri, setTlds };

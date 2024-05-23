@@ -45,7 +45,7 @@ body {
 }
 
 .neutral {
-  background-color: #dfdfdf;
+  background-color: #e3e3e3;
 }
 
 input[type='checkbox'] {
@@ -160,7 +160,7 @@ td {
 
 .uri-part {
   /* `white-space-collapse` (as a better alternative to `white-space` for simply preserving
-  white-space without other effects) is not yet supported in Firefox/Safari as of 2024-03 */
+  white-space without other effects) is not yet supported in Firefox/Safari as of March 2024 */
   white-space: break-spaces;
   word-break: break-all;
   font-family: Consolas, 'Courier New', Courier, monospace;
@@ -169,7 +169,7 @@ td {
 }
 
 .neutral .uri-part {
-  background-color: #d8d8d8;
+  background-color: #dadada;
 }
 
 .success .uri-part {
