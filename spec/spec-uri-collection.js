@@ -121,7 +121,7 @@ describe('URI collection', () => {
     },
   ];
 
-  it('should match expected results in default mode', () => {
+  it('should match expected results for a collection of URIs in default mode', () => {
     uris.forEach(uri => {
       expect(parseUri(uri.uri, 'default')).toMatchUriKeys({
         href: uri.uri,

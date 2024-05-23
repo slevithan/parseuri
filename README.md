@@ -1,14 +1,14 @@
-# parseUri 3.0.1
+# parseUri
 
 `parseUri` is a mighty but tiny JavaScript URI/URN/URL parser that splits any URI into its parts (all of which are optional). Its combination of accuracy, comprehensiveness, and brevity is unrivaled (1KB min/gzip, with no dependencies).
 
-## Breaking changes in parseUri 2
+## Breaking changes
 
-Version 2 was a major, breaking change that probably requires updating URI part names in your code. See details in the [release notes](https://github.com/slevithan/parseuri/releases/tag/v2.0.0) and compare results on the [demo page](https://slevithan.github.io/parseuri/demo/?compareV1=true&friendlyMode=true).
+Version 2 was a major, breaking change that probably requires updating URI part names in your code. See details in the [release notes](https://github.com/slevithan/parseuri/releases/tag/v2.0.0) and compare results on the [demo page](https://slevithan.github.io/parseuri/demo/?compareV1=true&friendlyMode=true). Version 3 was a small update published on npm as ESM.
 
-## Compared to the built-in `URL` constructor
+## Compared to the `URL` constructor
 
-`parseUri` includes several advantages over [`URL`](https://developer.mozilla.org/en-US/docs/Web/API/URL):
+`parseUri` includes several advantages over the built-in [`URL`](https://developer.mozilla.org/en-US/docs/Web/API/URL):
 
 * It gives you many additional properties (`authority`, `userinfo`, `subdomain`, `domain`, `tld`, `resource`, `directory`, `filename`, `suffix`) that aren’t available from `URL`.
 * `URL` throws e.g. if not given a protocol, and in many other cases of valid (but not supported) and invalid URIs. `parseUri` makes a best case effort even with partial or invalid URIs and is extremely good with edge cases.
@@ -18,7 +18,7 @@ Version 2 was a major, breaking change that probably requires updating URI part 
 
 Conversely, `parseUri` is single-purpose and doesn’t apply normalization.
 
-`parseUri`’s [demo page](https://slevithan.github.io/parseuri/demo/?urlStandard=true) allows easily comparing with `URL`’s results.
+The [demo page](https://slevithan.github.io/parseuri/demo/?urlStandard=true) allows easily comparing with `URL`’s results.
 
 ## Results / URI parts
 
@@ -47,7 +47,7 @@ Here’s an example of what each part contains:
 
 > If this chart doesn’t appear correctly, view it on [GitHub](https://github.com/slevithan/parseuri/blob/main/README.md#results--uri-parts).
 
-`parseUri` additionally supports IPv4 and IPv6 addresses, URNs, and many edge cases not shown here. See [tests](https://slevithan.github.io/parseuri/spec/).
+`parseUri` additionally supports IPv4 and IPv6 addresses, URNs, and many edge cases not shown here. See the [tests](https://slevithan.github.io/parseuri/spec/).
 
 ## Parsing modes
 
@@ -78,16 +78,16 @@ uri.queryParams.get('q') // → 'x'
 uri.queryParams.getAll('q') // → ['x', '']
 uri.queryParams.get('not-present') // → null
 uri.queryParams.getAll('not-present') // → []
-// also available: href, origin, authority, userinfo, username, password, tld
+// Also available: href, origin, authority, userinfo, username, password, tld
 
-// relative path (not starting from root /)
+// Relative path (not starting from root /)
 uri = parseUri('dir/file.html?q=x');
 uri.hostname // → ''
 uri.directory // → 'dir/'
 uri.filename // → 'file.html'
 uri.query // → 'q=x'
 
-// friendly mode allows starting with an authority
+// Friendly mode allows starting with an authority
 uri = parseUri('example.com/file.html', 'friendly');
 uri.hostname // → 'example.com'
 uri.directory // → '/'
@@ -107,7 +107,7 @@ uri.port // → '80'
 uri.domain // → ''
 uri.query // → 'q=x'
 
-// mailto
+// Mailto
 uri = parseUri('mailto:first@my.com,second@my.com?subject=Hey&body=Sign%20me%20up!');
 uri.protocol // → 'mailto'
 uri.username // → ''
@@ -116,7 +116,7 @@ uri.pathname // → 'first@my.com,second@my.com'
 uri.query // → 'subject=Hey&body=Sign%20me%20up!'
 uri.queryParams.get('body') // → 'Sign me up!'
 
-// mailto in friendly mode
+// Mailto in friendly mode
 uri = parseUri('mailto:me@my.com?subject=Hey', 'friendly');
 uri.protocol // → 'mailto'
 uri.username // → 'me'
@@ -132,28 +132,27 @@ uri.pathname // → ''
 */
 ```
 
-Use `parseUri`’s [demo page](https://slevithan.github.io/parseuri/demo/) to easily test and compare results.
+Use the [demo page](https://slevithan.github.io/parseuri/demo/) to easily test and compare results.
 
-## Installation and usage
-
-npm:
+## Install
 
 ```bash
 npm install parseuri
 ```
 
-Node.js:
+## Use
+
 
 ```js
 import { parseUri, setTlds } from 'parseuri';
 ```
 
-Browsers:
+In browsers:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/parseuri/dist/parseuri.min.js"></script>
 <script>
-  const uri = parseUri('https://example.com/');
+  console.log(parseUri('https://example.com/'));
   // If needed, use `parseUri.setTlds`
 </script>
 ```
