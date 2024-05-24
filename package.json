@@ -1,6 +1,6 @@
 {
   "name": "parseuri",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Mighty but tiny URI parser",
   "homepage": "https://slevithan.github.io/parseuri/demo/",
   "exports": "./src/index.js",

@@ -4,7 +4,7 @@
 
 ## Breaking changes
 
-Version 2 was a major, breaking change that probably requires updating URI part names in your code. See details in the [release notes](https://github.com/slevithan/parseuri/releases/tag/v2.0.0) and compare results on the [demo page](https://slevithan.github.io/parseuri/demo/?compareV1=true&friendlyMode=true). Version 3 was a small update published on npm as ESM.
+Version 2 was a major, breaking change that probably requires updating URI part names in your code. See details in the [release notes](https://github.com/slevithan/parseuri/releases/tag/v2.0.0) and compare results on the [demo page](https://slevithan.github.io/parseuri/demo/?compareV1=true&friendlyMode=true). Version 3 was a small update published on npm as pure ESM.
 
 ## Compared to the `URL` constructor
 
@@ -47,7 +47,7 @@ Here’s an example of what each part contains:
 
 > If this chart doesn’t appear correctly, view it on [GitHub](https://github.com/slevithan/parseuri/blob/main/README.md#results--uri-parts).
 
-`parseUri` additionally supports IPv4 and IPv6 addresses, URNs, and many edge cases not shown here. See the [tests](https://slevithan.github.io/parseuri/spec/).
+`parseUri` additionally supports IPv4 and IPv6 addresses, URNs, and many edge cases not shown here. See the extensive [tests](https://slevithan.github.io/parseuri/spec/).
 
 ## Parsing modes
 
@@ -141,7 +141,6 @@ npm install parseuri
 ```
 
 ## Use
-
 
 ```js
 import { parseUri, setTlds } from 'parseuri';

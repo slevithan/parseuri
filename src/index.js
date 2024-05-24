@@ -1,4 +1,4 @@
-//! parseUri 3.0.1; Steven Levithan; MIT License
+//! parseUri 3.0.2; Steven Levithan; MIT License
 /* A mighty but tiny URI/URN/URL parser; splits any URI into its parts (all of which are optional).
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────────────┐
 │                                                  href                                                    │
