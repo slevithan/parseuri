@@ -62,9 +62,9 @@ parseUri(uri, 'default');
 parseUri(uri, 'friendly');
 ```
 
-Usually the two modes produce the same result. This is true for any URI that starts with `<protocol>://`, `<web-protocol>:`, `:`, `//`, `/`, `\`, `?`, or `#`. The difference is that the default mode follows official URI rules, whereas friendly mode handles human-friendly URLs like `'example.com/file.html'` as expected.
+Results are always the same for any URI that starts with `<protocol>://`, `<web-protocol>:`, `:`, `//`, `/`, `\`, `?`, or `#`. The difference is that the default mode follows official URI standards, whereas friendly mode handles human-friendly URLs like `'example.com/file.html'` as expected.
 
-More specifically, friendly mode doesn’t require `<protocol>:`, `:`, `//`, or other repeating slashes to signal the start of an authority. This has the following effects:
+To be precise, friendly mode doesn’t require `<protocol>:`, `:`, `//`, or other repeating slashes to signal the start of an authority. This has the following effects:
 
 - It allows starting a URI with an authority (as noted).
 - It therefore precludes friendly mode from properly handling relative paths (no leading `/` or `\`) such as `'dir/file.html'`.

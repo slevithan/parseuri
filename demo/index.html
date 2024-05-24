@@ -21,12 +21,12 @@
     library).</p>
   <p><span class="badge">Modes:</span>
     <code>parseUri</code> has two parsing modes: default and friendly. Usually they produce the
-    same result, but the default mode follows official URI rules and friendly mode allows handling
-    human-friendly URLs like <code>'example.com/file.html'</code> as expected. More specifically,
-    friendly mode doesn’t require <code>&lt;protocol>:</code>, <code>:</code>, <code>//</code>, or
-    other repeating slashes to signal the start of an authority, but this also precludes it from
-    properly handling relative paths (no leading <code>/</code> or <code>\</code>) such as
-    <code>'dir/file.html'</code>.</p>
+    same result, but the default mode follows official URI standards and friendly mode allows
+    handling human-friendly URLs like <code>'example.com/file.html'</code> as expected. More
+    specifically, friendly mode doesn’t require <code>&lt;protocol>:</code>, <code>:</code>,
+    <code>//</code>, or other repeating slashes to signal the start of an authority, but this also
+    precludes it from properly handling relative paths (no leading <code>/</code> or
+    <code>\</code>) such as <code>'dir/file.html'</code>.</p>
   <details>
     <summary>Show more details</summary>
     <p><span class="badge">Normalization:</span>
