@@ -4,7 +4,7 @@
 
 ## Breaking changes
 
-Version 2 was a major, breaking change that probably requires updating URI part names in your code. See details in the [release notes](https://github.com/slevithan/parseuri/releases/tag/v2.0.0) and compare results on the [demo page](https://slevithan.github.io/parseuri/demo/?compareV1=true&friendlyMode=true). Version 3 was a small update published on npm as pure ESM.
+Version 2 was a major, breaking change that might require updating URI part names in your code and/or providing `'friendly'` as a second argument to preserve the previous default handling of relative paths. See details in the [v2 release notes](https://github.com/slevithan/parseuri/releases/tag/v2.0.0), and compare results with v1.2.2 on the [demo page](https://slevithan.github.io/parseuri/demo/?compareV1=true&friendlyMode=true). Version 3 was a minor update published on npm as pure ESM.
 
 ## Compared to the `URL` constructor
 
@@ -18,7 +18,7 @@ Version 2 was a major, breaking change that probably requires updating URI part 
 
 Conversely, `parseUri` is single-purpose and doesn’t apply normalization.
 
-The [demo page](https://slevithan.github.io/parseuri/demo/?urlStandard=true) allows easily comparing with `URL`’s results.
+You can compare with `URL`’s results on the [demo page](https://slevithan.github.io/parseuri/demo/?urlStandard=true).
 
 ## Results / URI parts
 
@@ -45,17 +45,33 @@ Here’s an example of what each part contains:
 └──────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-> If this chart doesn’t appear correctly, view it on [GitHub](https://github.com/slevithan/parseuri/blob/main/README.md#results--uri-parts).
+> If this chart isn’t appearing correctly, view it on [GitHub](https://github.com/slevithan/parseuri/blob/main/README.md#results--uri-parts).
 
-`parseUri` additionally supports IPv4 and IPv6 addresses, URNs, and many edge cases not shown here. See the extensive [tests](https://slevithan.github.io/parseuri/spec/).
+`parseUri` additionally supports IPv4 and IPv6 addresses, URNs, and many edge cases not shown here. See the extensive [tests](https://slevithan.github.io/parseuri/spec/). References include [RFC 3986](https://datatracker.ietf.org/doc/html/rfc3986) and [WHATWG URL](https://url.spec.whatwg.org/).
 
 ## Parsing modes
 
-`parseUri` has two parsing modes: default and friendly. The default mode follows official URI rules. Friendly mode doesn’t require `'<protocol>:'`, `':'`, or `'//'` to signal the start of an authority, which allows handling human-friendly URLs like `'example.com/file.html'` as expected. This change has several effects:
+`parseUri` has two parsing modes (default and friendly), specified via an optional second argument:
 
-- It allows starting a URI with an authority (as noted above).
-- It precludes friendly mode from properly handling relative paths (that don’t start from root `'/'`) such as `'dir/file.html'`.
-- Since the web protocols `http`, `https`, `ws`, `wss`, and `ftp` don’t require `'//'`, this also means that friendly mode extends this behavior to non-web protocols.
+```js
+// Default mode
+parseUri(uri);
+// Also default mode
+parseUri(uri, 'default');
+// Friendly mode
+parseUri(uri, 'friendly');
+```
+
+Usually the two modes produce the same result. This is true for any URI that starts with `<protocol>://`, `<web-protocol>:`, `:`, `//`, `/`, `\`, `?`, or `#`. The difference is that the default mode follows official URI rules, whereas friendly mode handles human-friendly URLs like `'example.com/file.html'` as expected.
+
+More specifically, friendly mode doesn’t require `<protocol>:`, `:`, `//`, or other repeating slashes to signal the start of an authority. This has the following effects:
+
+- It allows starting a URI with an authority (as noted).
+- It therefore precludes friendly mode from properly handling relative paths (no leading `/` or `\`) such as `'dir/file.html'`.
+- It avoids requiring `//` after a non-web protocol.
+  - Note: The web protocols `http`, `https`, `ws`, `wss`, and `ftp` never require `//`.
+
+You can compare default and friendly mode results on the [demo page](https://slevithan.github.io/parseuri/demo/?friendlyMode=true).
 
 ## Examples
 
@@ -80,7 +96,7 @@ uri.queryParams.get('not-present') // → null
 uri.queryParams.getAll('not-present') // → []
 // Also available: href, origin, authority, userinfo, username, password, tld
 
-// Relative path (not starting from root /)
+// Relative path
 uri = parseUri('dir/file.html?q=x');
 uri.hostname // → ''
 uri.directory // → 'dir/'
@@ -108,20 +124,23 @@ uri.domain // → ''
 uri.query // → 'q=x'
 
 // Mailto
-uri = parseUri('mailto:first@my.com,second@my.com?subject=Hey&body=Sign%20me%20up!');
+uri = parseUri('mailto:me@my.com?subject=Hey&body=Sign%20me%20up!');
 uri.protocol // → 'mailto'
+uri.authority // → ''
 uri.username // → ''
 uri.hostname // → ''
-uri.pathname // → 'first@my.com,second@my.com'
+uri.pathname // → 'me@my.com'
 uri.query // → 'subject=Hey&body=Sign%20me%20up!'
 uri.queryParams.get('body') // → 'Sign me up!'
 
 // Mailto in friendly mode
 uri = parseUri('mailto:me@my.com?subject=Hey', 'friendly');
 uri.protocol // → 'mailto'
+uri.authority // → 'me@my.com'
 uri.username // → 'me'
 uri.hostname // → 'my.com'
 uri.pathname // → ''
+// query and queryParams are the same
 
 /* Also supports e.g.:
 - https://[2001:db8:85a3::7334%en1]/ipv6-with-zone-identifier
@@ -132,7 +151,7 @@ uri.pathname // → ''
 */
 ```
 
-Use the [demo page](https://slevithan.github.io/parseuri/demo/) to easily test and compare results.
+Test and compare results on the [demo page](https://slevithan.github.io/parseuri/demo/).
 
 ## Install
 

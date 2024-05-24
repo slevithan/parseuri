@@ -107,6 +107,14 @@ abbr {
   box-shadow: 0 0 8px rgba(0, 123, 255, 0.7);
 }
 
+h1 img:hover {
+  filter: invert(50%);
+}
+
+img {
+  vertical-align: middle;
+}
+
 #version {
   font-size: 0.7rem;
   font-weight: normal;

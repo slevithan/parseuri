@@ -3,31 +3,30 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Universal URI parser: parseUri</title>
+  <title>URL parser: parseUri</title>
   <link rel="stylesheet" href="./assets/styles.css">
 </head>
 <body>
   <h1>
-    Universal URI parser:
     <a href="https://github.com/slevithan/parseuri"><code>parseUri</code></a>
+    <a href="https://github.com/slevithan/parseuri"><img src="./assets/github.svg" width="25" height="25" alt="GitHub"></a>
+    <code>//</code> URL parser
     <span id="version"></span>
   </h1>
-  <p><span class="badge">Context:</span>
-    <code>parseUri</code> is a mighty but tiny JavaScript URI/URN/URL parser that splits any URI
-    into its parts (all of which are optional). Its combination of accuracy, comprehensiveness, and
-    brevity is unrivaled.</p>
-  <p><span class="badge">Demo:</span>
-    This demo page is for testing <code>parseUri</code> and comparing its results with v1, the
-    built-in <a href="https://developer.mozilla.org/en-US/docs/Web/API/URL"><code>URL</code></a>
-    constructor, and <a href="https://github.com/medialize/URI.js">URI.js</a> (a much larger
+  <p><code>parseUri</code> is a mighty but tiny (1KB) JavaScript URI/URN/URL parser that splits any
+    URI into its parts (all of which are optional). Its combination of accuracy, comprehensiveness,
+    and brevity is unrivaled. This demo page allows you to test its results and compare with
+    JavaScript’s built-in <a href="https://developer.mozilla.org/en-US/docs/Web/API/URL"><code>URL</code></a>
+    constructor and <a href="https://github.com/medialize/URI.js">URI.js</a> (a much larger
     library).</p>
-  <p><span class="badge">Parsing modes:</span>
-    <code>parseUri</code> has two parsing modes: default and friendly. The default mode follows
-    official URI rules. Friendly mode doesn’t require <code>'&lt;protocol>:'</code>,
-    <code>':'</code>, or <code>'//'</code> to signal the start of an authority, which allows
-    handling human-friendly URLs like <code>'example.com/file.html'</code> as expected. However,
-    it also precludes friendly mode from properly handling relative paths (that don’t start from
-    root <code>'/'</code>) such as <code>'dir/file.html'</code>.</p>
+  <p><span class="badge">Modes:</span>
+    <code>parseUri</code> has two parsing modes: default and friendly. Usually they produce the
+    same result, but the default mode follows official URI rules and friendly mode allows handling
+    human-friendly URLs like <code>'example.com/file.html'</code> as expected. More specifically,
+    friendly mode doesn’t require <code>&lt;protocol>:</code>, <code>:</code>, <code>//</code>, or
+    other repeating slashes to signal the start of an authority, but this also precludes it from
+    properly handling relative paths (no leading <code>/</code> or <code>\</code>) such as
+    <code>'dir/file.html'</code>.</p>
   <details>
     <summary>Show more details</summary>
     <p><span class="badge">Normalization:</span>
@@ -60,9 +59,9 @@
 "  https   ://   user   :   pass   @ sub1.sub2 . dom.com  : 8080   /p/a/t/h/  a.html    ?  q=1  #   hash   "
 └──────────────────────────────────────────────────────────────────────────────────────────────────────────┘</p>
     <p><code>parseUri</code> additionally supports IPv4 and IPv6 addresses, URNs, and many edge
-      cases not shown here. See <a href="../spec/index.html">tests</a>. References include
-      <a href="https://datatracker.ietf.org/doc/html/rfc3986">RFC 3986</a> and the
-      <a href="https://url.spec.whatwg.org/">WHATWG URL Standard</a>.</p>
+      cases not shown here. See the extensive <a href="../spec/index.html">tests</a>. References
+      include <a href="https://datatracker.ietf.org/doc/html/rfc3986">RFC 3986</a> and
+      <a href="https://url.spec.whatwg.org/">WHATWG URL</a>.</p>
   </details>
   <details id="examples">
     <summary>Show examples</summary>
