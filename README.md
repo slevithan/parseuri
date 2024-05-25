@@ -62,16 +62,16 @@ parseUri(uri, 'default');
 parseUri(uri, 'friendly');
 ```
 
-Results are always the same for any URI that starts with `<protocol>://`, `<web-protocol>:`, `:`, `//`, `/`, `\`, `?`, or `#`. The difference is that the default mode follows official URI standards, whereas friendly mode handles human-friendly URLs like `'example.com/file.html'` as expected.
+The default mode follows official URI standards, whereas friendly mode handles human-friendly URLs like `'example.com/file.html'` as expected. Results are identical for any URI that starts with `<protocol>://`, `<web-protocol>:`, `:`, `//`, `/`, `\`, `?`, or `#`.
 
-To be precise, friendly mode doesn’t require `<protocol>:`, `:`, `//`, or other repeating slashes to signal the start of an authority. This has the following effects:
+To be precise, the only difference is that friendly mode doesn’t require `<protocol>:`, `:`, `//`, or other repeating slashes to signal the start of an authority. This has the following effects:
 
 - It allows starting a URI with an authority (as noted).
-- It therefore precludes friendly mode from properly handling relative paths (no leading `/` or `\`) such as `'dir/file.html'`.
+- It therefore precludes proper handling for relative paths (without a leading `/` or `\`) such as `'dir/file.html'`. Friendly mode considers it to start with hostname `dir`.
 - It avoids requiring `//` after a non-web protocol.
-  - Note: The web protocols `http`, `https`, `ws`, `wss`, and `ftp` never require `//`.
+  - Note: The web protocols `http`, `https`, `ws`, `wss`, and `ftp` never require `//`; friendly mode extends this to non-web protocols.
 
-You can compare default and friendly mode results on the [demo page](https://slevithan.github.io/parseuri/demo/?friendlyMode=true).
+You can compare results from default and friendly mode on the [demo page](https://slevithan.github.io/parseuri/demo/?friendlyMode=true).
 
 ## Examples
 
@@ -134,13 +134,12 @@ uri.query // → 'subject=Hey&body=Sign%20me%20up!'
 uri.queryParams.get('body') // → 'Sign me up!'
 
 // Mailto in friendly mode
-uri = parseUri('mailto:me@my.com?subject=Hey', 'friendly');
+uri = parseUri('mailto:me@my.com', 'friendly');
 uri.protocol // → 'mailto'
 uri.authority // → 'me@my.com'
 uri.username // → 'me'
 uri.hostname // → 'my.com'
 uri.pathname // → ''
-// query and queryParams are the same
 
 /* Also supports e.g.:
 - https://[2001:db8:85a3::7334%en1]/ipv6-with-zone-identifier
