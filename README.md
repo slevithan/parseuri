@@ -8,7 +8,7 @@ Version 2 was a major, breaking change that might require updating URI part name
 
 ## Compared to the `URL` constructor
 
-`parseUri` includes several advantages over the built-in [`URL`](https://developer.mozilla.org/en-US/docs/Web/API/URL):
+`parseUri` includes several advantages over JavaScript’s built-in [`URL`](https://developer.mozilla.org/en-US/docs/Web/API/URL):
 
 * It gives you many additional properties (`authority`, `userinfo`, `subdomain`, `domain`, `tld`, `resource`, `directory`, `filename`, `suffix`) that aren’t available from `URL`.
 * `URL` throws e.g. if not given a protocol, and in many other cases of valid (but not supported) and invalid URIs. `parseUri` makes a best case effort even with partial or invalid URIs and is extremely good with edge cases.
@@ -66,12 +66,12 @@ The default mode follows official URI standards, whereas friendly mode handles h
 
 To be precise, the only difference is that friendly mode doesn’t require `<protocol>:`, `:`, `//`, or other repeating slashes to signal the start of an authority. This has the following effects:
 
-- It allows starting a URI with an authority (as noted).
-- It therefore precludes proper handling for relative paths (without a leading `/` or `\`) such as `'dir/file.html'`. Friendly mode considers it to start with hostname `dir`.
+- It allows starting a URI with an authority, such as `'example.com'`.
+- It therefore precludes proper handling for relative paths (without a leading `/` or `\`) such as `'dir/file.html'`. Friendly mode considers this example to start with hostname `dir`.
 - It avoids requiring `//` after a non-web protocol.
-  - Note: The web protocols `http`, `https`, `ws`, `wss`, and `ftp` never require `//`; friendly mode extends this to non-web protocols.
+  - The “web protocols” are `http`, `https`, `ws`, `wss`, and `ftp`. They never require `//`, and friendly mode extends this handling to non-web protocols.
 
-You can compare results from default and friendly mode on the [demo page](https://slevithan.github.io/parseuri/demo/?friendlyMode=true).
+You can compare results of the default and friendly modes on the [demo page](https://slevithan.github.io/parseuri/demo/?friendlyMode=true).
 
 ## Examples
 
