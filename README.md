@@ -1,6 +1,10 @@
 # parseUri
 
-`parseUri` is a mighty but tiny JavaScript URI/URN/URL parser that splits any URI into its parts (all of which are optional). Its combination of accuracy, comprehensiveness, and brevity is unrivaled (1KB min/gzip, with no dependencies).
+[![npm version][npm-version-src]][npm-version-href]
+[![npm downloads][npm-downloads-src]][npm-downloads-href]
+[![bundle][bundle-src]][bundle-href]
+
+`parseUri` is a mighty but tiny JavaScript URI/URN/URL parser that splits any URI into its parts (all of which are optional). Its combination of accuracy, comprehensiveness, and brevity is unrivaled (< 1KB min/gzip, with no dependencies).
 
 ## Breaking changes
 
@@ -152,13 +156,11 @@ uri.pathname // → ''
 
 Test and compare results on the [demo page](https://slevithan.github.io/parseuri/demo/).
 
-## Install
+## Install and use
 
 ```bash
 npm install parseuri
 ```
-
-## Use
 
 ```js
 import { parseUri, setTlds } from 'parseuri';
@@ -173,3 +175,12 @@ In browsers:
   // If needed, use `parseUri.setTlds`
 </script>
 ```
+
+<!-- Badges -->
+
+[npm-version-src]: https://img.shields.io/npm/v/parseuri?color=78C372
+[npm-version-href]: https://npmjs.com/package/parseuri
+[npm-downloads-src]: https://img.shields.io/npm/dm/parseuri?color=78C372
+[npm-downloads-href]: https://npmjs.com/package/parseuri
+[bundle-src]: https://img.shields.io/bundlejs/size/parseuri?color=78C372&label=minzip
+[bundle-href]: https://bundlejs.com/?q=parseuri&treeshake=[*]
